@@ -9,7 +9,7 @@
             "extensions": [
                 "rust-lang.rust-analyzer",
                 "tamasfe.even-better-toml",
-                "spacebox.monospace-idx-theme"
+                "beardedbear.beardedtheme"
             ],
             "settings": {
                 "files.watcherExclude": {
@@ -19,15 +19,16 @@
                 "window.autoDetectColorScheme": true,
                 "window.autoDetectHighContrast": false,
             
-                "workbench.preferredDarkColorTheme": "Monospace IDX Dark",
-                "workbench.preferredLightColorTheme": "Monospace IDX Light",
-                "workbench.colorTheme": "Monospace IDX Light",
+                "workbench.preferredDarkColorTheme": "Bearded Theme Monokai Terra",
+                "workbench.preferredLightColorTheme": "Bearded Theme feat. Melle Julie Light",
+                "workbench.colorTheme": "Bearded Theme feat. Melle Julie Light",
                 "workbench.startupEditor": "none",
                 "workbench.editor.enablePreview": false,
                 "workbench.activityBar.location": "top",
                 
                 "editor.wordWrap": "on",
-                "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+                "editor.fontFamily": "'Inconsolata', Menlo, Monaco, 'Courier New', monospace",
+                "editor.fontSize": 15,
                 "editor.fontLigatures": true,
                 "editor.cursorStyle": "underline",
                 "editor.minimap.enabled": false,

@@ -5,6 +5,9 @@
 # privileged ("root") context.
 #
 
+CODE_SERVER_VERSION="${CODE_SERVER_VERSION:-4.103.0}"
+CODE_SERVER_ARCH="${CODE_SERVER_ARCH:-amd64}"
+
 # Exit on first error.
 set -e
 
@@ -63,8 +66,8 @@ enabled = true
 EOF
 
 # Install code server.
-CODE_SERVER_RPM=code-server-${var.code_server_version}-${var.code_server_arch}.rpm
-wget https://github.com/coder/code-server/releases/download/v${var.code_server_version}/${CODE_SERVER_RPM}
+CODE_SERVER_RPM=code-server-${CODE_SERVER_VERSION}-${CODE_SERVER_ARCH}.rpm
+wget https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/${CODE_SERVER_RPM}
 rpm -K ${CODE_SERVER_RPM}
 dnf install -y ./${CODE_SERVER_RPM}
 rm ${CODE_SERVER_RPM}

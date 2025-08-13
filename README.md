@@ -6,6 +6,8 @@ This repository contains a collection of  tools and templates for creating, depl
 
 1. `ops/` contains shell scripts for committing code to, and releasing code from, Cargo workspaces.
 
+2. `workbench/` contains shell scripts, Packer templates, and Terraform templates for provisioning development environments ("workbenches").
+
 ## License and Contributions 
 
 Copyright 2025 With Caer, LLC.

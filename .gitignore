@@ -1,1 +1,10 @@
+# Packer
+*.auto.pkrvars.hcl
+
+# Terraform
+*.auto.tfvars
+.terraform/
+*.tfstate*
+
+# MacOS
 .DS_Store

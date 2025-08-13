@@ -1,0 +1,56 @@
+diff --git a/ci/build/build-vscode.sh b/ci/build/build-vscode.sh
+index 358d8d6..d2ebf69 100755
+--- a/ci/build/build-vscode.sh
++++ b/ci/build/build-vscode.sh
+@@ -6,6 +6,9 @@ set -euo pipefail
+ # MINIFY controls whether a minified version of vscode is built.
+ MINIFY=${MINIFY-true}
+ 
++# Use code-server as the default app name.
++APP_NAME="${APP_NAME:-Workbench}"
++
+ delete-bin-script() {
+   rm -f "lib/vscode-reh-web-linux-x64/bin/$1"
+ }
+@@ -16,7 +19,7 @@ copy-bin-script() {
+   cp "lib/vscode/resources/server/bin/$script" "$dest"
+   sed -i.bak "s/@@VERSION@@/$(vscode_version)/g" "$dest"
+   sed -i.bak "s/@@COMMIT@@/$BUILD_SOURCEVERSION/g" "$dest"
+-  sed -i.bak "s/@@APPNAME@@/code-server/g" "$dest"
++  sed -i.bak "s/@@APPNAME@@/$APP_NAME/g" "$dest"
+ 
+   # Fix Node path on Darwin and Linux.
+   # We do not want expansion here; this text should make it to the file as-is.
+@@ -70,17 +73,17 @@ main() {
+   jq --slurp '.[0] * .[1]' product.original.json <(
+     cat << EOF
+   {
+-    "enableTelemetry": true,
++    "enableTelemetry": false,
+     "quality": "stable",
+     "codeServerVersion": "$VERSION",
+-    "nameShort": "code-server",
+-    "nameLong": "code-server",
+-    "applicationName": "code-server",
++    "nameShort": "$APP_NAME",
++    "nameLong": "$APP_NAME",
++    "applicationName": "$APP_NAME",
+     "dataFolderName": ".code-server",
+     "win32MutexName": "codeserver",
+     "licenseUrl": "https://github.com/coder/code-server/blob/main/LICENSE",
+-    "win32DirName": "code-server",
+-    "win32NameVersion": "code-server",
++    "win32DirName": "$APP_NAME",
++    "win32NameVersion": "$APP_NAME",
+     "win32AppUserModelId": "coder.code-server",
+     "win32ShellNameShort": "c&ode-server",
+     "darwinBundleIdentifier": "com.coder.code.server",
+@@ -102,7 +105,7 @@ main() {
+       "github.copilot", "github.copilot-chat"
+     ],
+     "aiConfig": {
+-      "ariaKey": "code-server"
++      "ariaKey": "$APP_NAME"
+     }
+   }
+ EOF

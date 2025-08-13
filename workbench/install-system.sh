@@ -29,7 +29,7 @@ dnf upgrade -y --refresh
 dnf install -y sudo fail2ban openssh-server cloudflared wget git
 dnf -y clean all && rm -rf /var/cache && df -h && rm -rf /tmp/user-packages.txt
 
-# Active SSH server.
+# Activate SSH server.
 systemctl enable --now sshd
 
 # Disallow password and root login via SSH.

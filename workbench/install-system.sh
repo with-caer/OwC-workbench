@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 # Performs the one-time installation and configuration
-# of a workbench on Fedora or Rocky Linux within a
-# privileged ("root") context.
+# of a workbench on Fedora within a privileged ("root")
+# context.
 #
 
 CODE_SERVER_VERSION="${CODE_SERVER_VERSION:-4.103.0}"
@@ -19,8 +19,7 @@ echo fastestmirror=True >> /etc/dnf/dnf.conf
 echo max_parallel_downloads=10 >> /etc/dnf/dnf.conf
 
 # Register custom repositories.
-dnf config-manager --add-repo https://pkg.cloudflare.com/cloudflared-ascii.repo
-dnf install -y epel-release
+dnf config-manager addrepo --from-repofile=https://pkg.cloudflare.com/cloudflared-ascii.repo
 
 # Refresh repositories and packages.
 dnf upgrade -y --refresh
@@ -33,9 +32,9 @@ dnf -y clean all && rm -rf /var/cache && df -h && rm -rf /tmp/user-packages.txt
 systemctl enable --now sshd
 
 # Disallow password and root login via SSH.
-sed -i -E 's/#?\\s*PasswordAuthentication\\s*.+$/PasswordAuthentication no/' /etc/ssh/sshd_config,
-sed -i -E 's/#?\\s*PermitRootLogin\\s*.+$/PermitRootLogin no/' /etc/ssh/sshd_config,
-sed -i -E 's/#?\\s*PermitEmptyPasswords\\s*.+$/PermitEmptyPasswords no/' /etc/ssh/sshd_config,
+sed -i -E 's/#?\\s*PasswordAuthentication\\s*.+$/PasswordAuthentication no/' /etc/ssh/sshd_config
+sed -i -E 's/#?\\s*PermitRootLogin\\s*.+$/PermitRootLogin no/' /etc/ssh/sshd_config
+sed -i -E 's/#?\\s*PermitEmptyPasswords\\s*.+$/PermitEmptyPasswords no/' /etc/ssh/sshd_config
 cat <<EOF > /etc/ssh/sshd_config.d/workbench.conf
 PasswordAuthentication no
 PermitRootLogin no
@@ -44,14 +43,7 @@ EOF
 
 # Activate firewall.
 systemctl enable --now firewalld
-
-# Disallow most ingress traffic in the public zone;
-# cloudflared will control public ingress.
 firewall-cmd --permanent --zone=public --remove-service=ssh
-firewall-cmd --permanent --zone=public --remove-service=http
-firewall-cmd --permanent --zone=public --remove-service=https
-
-# Allow SSH ingress traffic on the internal zone from private IPs.
 firewall-cmd --permanent --zone=trusted --add-service=ssh
 
 # Activate fail2ban.
@@ -73,4 +65,5 @@ dnf install -y ./${CODE_SERVER_RPM}
 rm ${CODE_SERVER_RPM}
 
 # Configure code server.
-sh assets/patch-code-server.sh
+cd assets
+sh patch-code-server.sh

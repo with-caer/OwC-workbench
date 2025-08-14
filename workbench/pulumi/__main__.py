@@ -23,7 +23,7 @@ zone = zones.results[0]
 workbench_tunnel_access_app = cloudflare.ZeroTrustAccessApplication(
     "workbench-tunnel-access-app",
     zone_id = zone.id,
-    name = f"{app_subdomain}-{app_domain}-access-app",
+    name = f"Workbench @ {app_subdomain}.{app_domain}",
     domain = f"{app_subdomain}.{app_domain}",
     type = "self_hosted",
     session_duration = "24h",
@@ -36,7 +36,7 @@ workbench_access_app_aud = workbench_tunnel_access_app.aud.apply(lambda aud: f"{
 workbench_tunnel = cloudflare.ZeroTrustTunnelCloudflared(
     "workbench-tunnel",
     account_id = account_id,
-    name = f"{app_subdomain}-{app_domain}-tunnel",
+    name = f"{app_subdomain}.{app_domain}-tunnel",
     config_src = "cloudflare",
 )
 

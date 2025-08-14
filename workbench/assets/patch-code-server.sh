@@ -1,4 +1,28 @@
 #!/bin/sh
+#
+# This patch is up-to-date as of `code-server`
+# version: 4.103.0.
+#
+
+# Name of the workbench as shown in the browser;
+# this name can be set to anything.
+WORKBENCH_NAME=Workbench
+
+# Root path to the workbench.
+WORKBENCH_PATH=/usr/lib/code-server
+
+# Path to the VS Code product.json file for the workbench.
+PRODUCT_JSON_PATH=$WORKBENCH_PATH/lib/vscode/product.json
+
+# Path to the VS Code main CSS file for the workbench.
+WORKBENCH_CSS_PARENT_PATH=$WORKBENCH_PATH/lib/vscode/out/vs/workbench
+WORKBENCH_CSS_PATH=$WORKBENCH_CSS_PARENT_PATH/workbench.web.main.css
+
+# Path to the VS Code path containing favicons.
+WORKBENCH_ICON_PATH=$WORKBENCH_PATH/src/browser/media
+
+# Path to the VS Code path containing logos.
+WORKBENCH_LOGO_PATH=$WORKBENCH_PATH/lib/vscode/out/media
 
 # Utility function for replacing a key's
 # value in-place in a JSON document.
@@ -15,35 +39,41 @@ replace_key_value()
 # the --app-name argument to code-server
 # only changes the login screen text
 # (https://github.com/coder/code-server/pull/5633).
-WORKBENCH_PATH=/usr/lib/code-server/lib/vscode/out/vs/workbench
-WORKBENCH_NAME=Workbench
-JSON_PATH=/usr/lib/code-server/lib/vscode/product.json
-replace_key_value $JSON_PATH nameShort "\"${WORKBENCH_NAME}\""
-replace_key_value $JSON_PATH nameLong "\"${WORKBENCH_NAME}\""
-replace_key_value $JSON_PATH applicationName "\"${WORKBENCH_NAME}\""
+replace_key_value $PRODUCT_JSON_PATH nameShort "\"${WORKBENCH_NAME}\""
+replace_key_value $PRODUCT_JSON_PATH nameLong "\"${WORKBENCH_NAME}\""
+replace_key_value $PRODUCT_JSON_PATH applicationName "\"${WORKBENCH_NAME}\""
 
 # Disable telemetry at the package level.
-replace_key_value $JSON_PATH enableTelemetry false
+replace_key_value $PRODUCT_JSON_PATH enableTelemetry false
 
-# Restyle the application icons.
-ICON_PATH=/usr/lib/code-server/src/browser/media
-cp caer-icon.ico $ICON_PATH/favicon.ico
-cp caer-icon.svg $ICON_PATH/favicon.svg
-cp caer-icon.svg $ICON_PATH/favicon-dark-support.svg
-cp caer-icon-squircle-192.png $ICON_PATH/pwa-icon-192.png
-cp caer-icon-squircle-512.png $ICON_PATH/pwa-icon-512.png
-cp caer-icon-squircle-540.png $ICON_PATH/pwa-icon.png
+# Restyle the application favicons.
+cp icon.ico $WORKBENCH_ICON_PATH/favicon.ico
+cp icon.svg $WORKBENCH_ICON_PATH/favicon.svg
+cp icon.svg $WORKBENCH_ICON_PATH/favicon-dark-support.svg
+cp icon-192.png $WORKBENCH_ICON_PATH/pwa-icon-192.png
+cp icon-512.png $WORKBENCH_ICON_PATH/pwa-icon-512.png
+cp icon-540.png $WORKBENCH_ICON_PATH/pwa-icon.png
 
-# Restyle the background graphic that is rendered when
+# Restyle the application logo.
+cp logo.svg $WORKBENCH_LOGO_PATH/code-icon.svg
+
+# Restyle the background logos that are rendered when
 # no files are open in the editor (the "letterpress").
-WORKBENCH_PATH_CSS=$WORKBENCH_PATH/workbench.web.main.css
-REPL=$(cat caer.svg.base64)
-REPL="data:image\/svg+xml;base64,$REPL"
+cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-light.svg
+cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcLight.svg
+cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-dark.svg
+cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcDark.svg
 
+# @caer: todo: These steps below used to be required
+#        in order to restyle the letterpress. It appears
+#        that, at least as-of version 4.103.0 of code-server,
+#        these steps are _no longer_ required.
+# REPL=$(cat caer.svg.base64)
+# REPL="data:image\/svg+xml;base64,$REPL"
 # Match all instances of the letterpress.
-EXPR='(letterpress\s*\{\s*.*?background-image:\s*url)\("(.*?)"\)'
-EXPR="s/$EXPR/\$1(\"$REPL\")/g"
-perl -i -pe $EXPR $WORKBENCH_PATH_CSS
+# EXPR='(letterpress\s*\{\s*.*?background-image:\s*url)\("(.*?)"\)'
+# EXPR="s/$EXPR/\$1(\"$REPL\")/g"
+# perl -i -pe $EXPR $WORKBENCH_CSS_PATH
 # Match the dark theme letterpress.
 # EXPR=\(vs-dark.*?letterpress\s*\\{\s*.*?background-image:\s*url\)\("(.*?)"\)
 # Match the high-contrast light theme letterpress.
@@ -55,13 +85,12 @@ perl -i -pe $EXPR $WORKBENCH_PATH_CSS
 # Related issue: https://github.com/microsoft/vscode/issues/121195
 EXPR='(monaco-editor\s*\.inputarea\s*\{)'
 EXPR="s/$EXPR/\$1-webkit-user-select:none;-user-select:none;/g"
-perl -i -pe $EXPR $WORKBENCH_PATH_CSS
+perl -i -pe $EXPR $WORKBENCH_CSS_PATH
 
-# Install Fira Code fonts.
+# Install fonts.
 # https://github.com/tuanpham-dev/code-server-font-patch/blob/master/patch.sh
-cp -rn fonts/*.ttf $WORKBENCH_PATH/
-cat fonts/inconsolata.css >> $WORKBENCH_PATH_CSS
+cp -rn fonts/*.ttf $WORKBENCH_CSS_PARENT_PATH/
+cat fonts/inconsolata.css >> $WORKBENCH_CSS_PATH
 
-# TODO: Restyle the Welcome page
+# @caer: todo: Restyle the Welcome page
 # https://github.com/coder/code-server/blob/095c072a43e6abf4eee163d81af9115d7000c4ce/patches/getting-started.diff#L35
-

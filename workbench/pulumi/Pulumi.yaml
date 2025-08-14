@@ -1,0 +1,7 @@
+name: workbench
+description: Workbench cloud resource Pulumi program
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv

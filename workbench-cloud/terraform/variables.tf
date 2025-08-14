@@ -21,6 +21,10 @@ variable "cf_team_name" {
   type = string
 }
 
+variable "cf_policy_id" {
+  type = string
+}
+
 variable "cf_app_domain" {
   type = string
 }

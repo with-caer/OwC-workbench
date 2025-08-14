@@ -1,0 +1,98 @@
+"""A Python Pulumi program"""
+
+import pulumi
+import pulumi_cloudflare as cloudflare
+import secrets
+
+# Load configuration.
+workbench_config = pulumi.Config()
+workbench_name = workbench_config.require('name')
+
+cf_config = pulumi.Config('cf')
+account_id = cf_config.require('account_id')
+team_name = cf_config.require('team_name')
+policy_id = cf_config.require('policy_id')
+app_domain = cf_config.require('app_domain')
+app_subdomain = cf_config.require('app_subdomain')
+
+# Find the Cloudflare Zone ID for the configured account ID.
+zones = cloudflare.get_zones(
+    account = {"id": account_id},
+    status = "active",
+    name = app_domain,
+)
+zone = zones.results[0]
+
+# Provision Cloudflare access application.
+workbench_tunnel_access_app = cloudflare.ZeroTrustAccessApplication(
+    "workbench-tunnel-access-app",
+    zone_id = zone.id,
+    name = f"{workbench_name}-access-app",
+    domain = f"{app_subdomain}.{app_domain}",
+    type = "self_hosted",
+    session_duration = "24h",
+    auto_redirect_to_identity = False,
+    policies = [{"id": policy_id}],
+)
+workbench_access_app_aud = workbench_tunnel_access_app.aud.apply(lambda aud: f"{aud}")
+
+# Provision a secret for the tunnel.
+workbench_tunnel_secret = secrets.token_urlsafe(64)
+pulumi.export("workbench_tunnel_secret", workbench_tunnel_secret)
+
+# Provision Cloudflare tunnel.
+workbench_tunnel = cloudflare.ZeroTrustTunnelCloudflared(
+    "workbench-tunnel",
+    account_id = account_id,
+    name = f"{workbench_name}-tunnel",
+    config_src = "cloudflare",
+    tunnel_secret = workbench_tunnel_secret,
+)
+
+# Provision CNAME record (HTTP path) routing traffic to the tunnel.
+workbench_tunnel_cname = cloudflare.DnsRecord(
+    "workbench-tunnel-cname",
+    zone_id = zone.id,
+    name = app_subdomain,
+    type = "CNAME",
+    proxied = True,
+    ttl = 1,
+
+    # See: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/#create-a-dns-record-for-the-tunnel
+    content = workbench_tunnel.id.apply(lambda id: f"{id}.cfargotunnel.com"),
+)
+
+# Configure tunnel.
+workbench_tunnel_config = cloudflare.ZeroTrustTunnelCloudflaredConfig(
+    "workbench-tunnel-config",
+    account_id = account_id,
+    tunnel_id =  workbench_tunnel.id.apply(lambda id: id),
+    config = {
+        "ingresses": [
+
+            # Route traffic from the tunnel to the local
+            # code-server service listening on port 31545.
+            {
+                # Public hostname the tunnel binds to.
+                "hostname": f"{app_subdomain}.{app_domain}",
+
+                # Local service the tunnel routes to.
+                "service": "http://localhost:31545",
+
+                # Require an authenticated access user.
+                "origin_request": {
+                    "access": {
+                        "required": True,
+                        "team_name": team_name,
+                        "aud_tags": [workbench_access_app_aud]
+                    }
+                },
+            },
+
+            # Default rule to return a 404 if no other rules match.
+            {
+                "service": "http_status:404",
+            }
+        ]
+    }
+)

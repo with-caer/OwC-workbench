@@ -35,10 +35,10 @@ locals {
 # Provision Cloudflare tunnel with managed access.
 module "cloudflare_access_tunnel" {
   source           = "./modules/cloudflare-access-tunnel"
-  user_email       = var.user_email
   workbench_name   = local.workbench_name
   cf_account_id    = var.cf_account_id
   cf_team_name     = var.cf_team_name
+  cf_policy_id     = var.cf_policy_id
   cf_app_domain    = var.cf_app_domain
   cf_app_subdomain = var.cf_app_subdomain
 }

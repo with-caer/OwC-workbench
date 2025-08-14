@@ -140,27 +140,3 @@ and can be a good place to install and configure your ideal dev
 environment. The output this script is piped to `~/.workbench/setup.log`
 if you need to debug any issues during the first boot.
 </details>
-
-### Bonus: Install a Web Browser _Inside_ `vscode`
-
-Installing a browser inside `vscode`--which is
-already running in your browser--might seem _very_ silly.
-
-However! Certain devices--iPads--don't have _any_
-support for dev tools on their native browsers...
-so this approach provides a functional, albeit laggy,
-work-around.
-
-Here are the steps:
-
-1. Install the [Browse Lite](https://marketplace.visualstudio.com/items?itemName=antfu.browse-lite)
-   extension from within VS code.
-
-2. Install `chromium-browser` via `dnf install chromium`.
-
-3. Configure `Browse Lite` to use the installed chromium
-   (at `/usr/bin/chromium-browser`).
-
-If everything works, you should be able to use the embedded
-browser to navigate to and inspect/debug websites--all from
-inside VS code!

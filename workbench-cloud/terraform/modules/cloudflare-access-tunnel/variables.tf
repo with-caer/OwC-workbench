@@ -1,8 +1,4 @@
 # User configuration.
-variable "user_email" {
-  type = string
-}
-
 variable "workbench_name" {
   type = string
 }
@@ -14,6 +10,10 @@ variable "cf_account_id" {
 
 variable "cf_team_name" {
   type        = string
+}
+
+variable "cf_policy_id" {
+  type = string
 }
 
 variable "cf_app_domain" {

@@ -15,11 +15,11 @@ terraform {
 
 # Obtain Cloudflare Zone ID from Account ID.
 data "cloudflare_zones" "cloudflare_zone" {
-  filter {
-    account_id = var.cf_account_id
-    status     = "active"
-    name       = var.cf_app_domain
+  account = {
+    id = var.cf_account_id
   }
+  status = "active"
+  name = var.cf_app_domain
 }
 locals {
   cloudflare_zone_id = data.cloudflare_zones.cloudflare_zone.zones[0].id
@@ -28,21 +28,6 @@ locals {
 # Provision 64-character token for the Cloudflare tunnel.
 resource "random_password" "cloudflare_tunnel_secret" {
   length = 64
-}
-
-# Provision default access policy for the application.
-resource "cloudflare_access_policy" "workbench_app_policy" {
-  account_id = var.cf_account_id
-  name       = "Default (Allow ${var.user_email})"
-  decision   = "allow"
-
-  include {
-    email = ["${var.user_email}"]
-  }
-
-  require {
-    email = ["${var.user_email}"]
-  }
 }
 
 # Provision Cloudflare access application for the tunnel.
@@ -54,8 +39,8 @@ resource "cloudflare_access_application" "workbench_app" {
   session_duration          = "24h"
   auto_redirect_to_identity = false
 
-  # Link the application to the policy we created above.
-  policies = [cloudflare_access_policy.workbench_app_policy.id]
+  # Link the application to the configured access policy.
+  policies = [var.cf_policy_id]
 }
 
 # Provision cloudflare tunnel.

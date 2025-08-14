@@ -90,7 +90,7 @@ perl -i -pe $EXPR $WORKBENCH_CSS_PATH
 # Install fonts.
 # https://github.com/tuanpham-dev/code-server-font-patch/blob/master/patch.sh
 cp -rn fonts/*.ttf $WORKBENCH_CSS_PARENT_PATH/
-cat fonts/inconsolata.css >> $WORKBENCH_CSS_PATH
+cat fonts/inconsolata.css | sudo tee -a $WORKBENCH_CSS_PATH
 
 # @caer: todo: Restyle the Welcome page
 # https://github.com/coder/code-server/blob/095c072a43e6abf4eee163d81af9115d7000c4ce/patches/getting-started.diff#L35

@@ -55,14 +55,14 @@ sudo systemctl enable --now code-server
 # Configure Pulumi.
 curl -fsSL https://get.pulumi.com | sh
 export PATH="${PATH}:~/.pulumi/bin"
-pulumi login --local
+~/.pulumi/bin/pulumi login --local
 
 # Provision Cloudflare tunnel.
 export PULUMI_CONFIG_PASSPHRASE=""
-pulumi stack -C pulumi init dev
-pulumi install -C pulumi
-pulumi up -C pulumi
-CLOUDFLARE_TUNNEL_TOKEN=$(pulumi stack -C pulumi output workbench_tunnel_token)
+~/.pulumi/bin/pulumi stack -C pulumi init dev
+~/.pulumi/bin/pulumi install -C pulumi
+~/.pulumi/bin/pulumi up -C pulumi
+CLOUDFLARE_TUNNEL_TOKEN=$(~/.pulumi/bin/pulumi stack -C pulumi output workbench_tunnel_token)
 
 # Install cloudflared tunnel, exposing the system to the internet.
-cloudflared service install $CLOUDFLARE_TUNNEL_TOKEN
+sudo cloudflared service install $CLOUDFLARE_TUNNEL_TOKEN

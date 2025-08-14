@@ -62,7 +62,7 @@ pulumi login --local
 # Provision Cloudflare tunnel.
 pulumi install -C pulumi
 pulumi up -C pulumi
-CLOUDFLARE_TUNNEL_TOKEN = $(pulumi stack -C pulumi output workbench_tunnel_secret)
+CLOUDFLARE_TUNNEL_TOKEN = $(pulumi stack -C pulumi output workbench_tunnel_token)
 
 # Install cloudflared tunnel, exposing the system to the internet.
 cloudflared service install $CLOUDFLARE_TUNNEL_TOKEN

@@ -2,7 +2,6 @@
 
 import pulumi
 import pulumi_cloudflare as cloudflare
-import secrets
 
 # Load configuration.
 workbench_config = pulumi.Config()
@@ -36,18 +35,20 @@ workbench_tunnel_access_app = cloudflare.ZeroTrustAccessApplication(
 )
 workbench_access_app_aud = workbench_tunnel_access_app.aud.apply(lambda aud: f"{aud}")
 
-# Provision a secret for the tunnel.
-workbench_tunnel_secret = secrets.token_urlsafe(64)
-pulumi.export("workbench_tunnel_secret", workbench_tunnel_secret)
-
 # Provision Cloudflare tunnel.
 workbench_tunnel = cloudflare.ZeroTrustTunnelCloudflared(
     "workbench-tunnel",
     account_id = account_id,
     name = f"{workbench_name}-tunnel",
     config_src = "cloudflare",
-    tunnel_secret = workbench_tunnel_secret,
 )
+
+# Export the tunnel's token for local use.
+workbench_tunnel_token = cloudflare.get_zero_trust_tunnel_cloudflared_token_output(
+    account_id = workbench_tunnel.account_id,
+    tunnel_id =  workbench_tunnel.id,
+);
+pulumi.export("workbench_tunnel_token", workbench_tunnel_token.token)
 
 # Provision CNAME record (HTTP path) routing traffic to the tunnel.
 workbench_tunnel_cname = cloudflare.DnsRecord(

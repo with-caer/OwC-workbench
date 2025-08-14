@@ -6,6 +6,23 @@
 
 export WORKBENCH_USER_NAME="${WORKBENCH_USER_NAME:-$(whoami)}"
 
+# Require the Pulumi configuration file to exist before performing setup.
+if [ ! -e pulumi/Pulumi.dev.yaml ]; then
+    echo "please create a pulumi/Pulumi.dev.yaml file, containing:"
+    cat << EOF
+config:
+  workbench:name: "workbench"
+
+  cloudflare:apiToken: "CLOUDFLARE_API_TOKEN"
+
+  cf:account_id: "CLOUDFLARE_ACCOUNT_ID"
+  cf:team_name: "CLOUDFLARE_TEAM_NAME"
+  cf:policy_id: "CLOUDFLARE_ZERO_ACCESS_POLICY_ID"
+  cf:app_domain: "CLOUDFLARE_ROOT_DOMAIN"
+  cf:app_subdomain: "CLOUDFLARE_SUB_DOMAIN"
+EOF
+fi
+
 # TODO: This step may not be necessary on desktop installations,
 #       since they often make the default user a sudoer on install.
 # Make user sudoer.
@@ -34,5 +51,14 @@ EOF
 # Activate code-server.
 sudo systemctl enable --now code-server
 
+# Configure Pulumi.
+curl -fsSL https://get.pulumi.com | sh
+pulumi login --local
+
+# Provision Cloudflare tunnel.
+pulumi install -C pulumi
+pulumi up -C pulumi
+CLOUDFLARE_TUNNEL_TOKEN = $(pulumi stack -C pulumi output workbench_tunnel_secret)
+
 # Install cloudflared tunnel, exposing the system to the internet.
-# cloudflared service install ${cloudflare_tunnel_token}
+cloudflared service install ${CLOUDFLARE_TUNNEL_TOKEN}

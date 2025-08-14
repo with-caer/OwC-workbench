@@ -4,9 +4,14 @@ This repository contains a collection of  tools and templates for creating, depl
 
 ## What's Here
 
+0. `.devcontainer` contains a pre-configured development container
+for Cargo (Rust) workspaces.
+
 1. `ops/` contains shell scripts for committing code to, and releasing code from, Cargo workspaces.
 
-2. `workbench/` contains shell scripts, Packer templates, and Terraform templates for provisioning development environments ("workbenches").
+2. `workbench/` contains shell scripts for provisioning development environments
+("workspaces") and [Pulumi](https://www.pulumi.com) templates for exposing
+them over the internet via Cloudflare tunneling.
 
 ## License and Contributions 
 

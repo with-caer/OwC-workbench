@@ -58,3 +58,6 @@ cat <<EOF > ${HOME}/.local/share/code-server/User/settings.json
     "terminal.integrated.localEchoLatencyThreshold": 10
 }
 EOF
+
+# Configure BASH.
+cat ./user-rc.sh >> ~/.bashrc

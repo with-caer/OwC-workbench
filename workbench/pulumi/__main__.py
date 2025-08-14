@@ -5,14 +5,11 @@ import pulumi_cloudflare as cloudflare
 
 # Load configuration.
 workbench_config = pulumi.Config()
-workbench_name = workbench_config.require('name')
-
-cf_config = pulumi.Config('cf')
-account_id = cf_config.require('account_id')
-team_name = cf_config.require('team_name')
-policy_id = cf_config.require('policy_id')
-app_domain = cf_config.require('app_domain')
-app_subdomain = cf_config.require('app_subdomain')
+account_id = workbench_config.require('account_id')
+team_name = workbench_config.require('team_name')
+policy_id = workbench_config.require('policy_id')
+app_domain = workbench_config.require('app_domain')
+app_subdomain = workbench_config.require('app_subdomain')
 
 # Find the Cloudflare Zone ID for the configured account ID.
 zones = cloudflare.get_zones(
@@ -26,7 +23,7 @@ zone = zones.results[0]
 workbench_tunnel_access_app = cloudflare.ZeroTrustAccessApplication(
     "workbench-tunnel-access-app",
     zone_id = zone.id,
-    name = f"{workbench_name}-access-app",
+    name = f"{app_subdomain}-{app_domain}-access-app",
     domain = f"{app_subdomain}.{app_domain}",
     type = "self_hosted",
     session_duration = "24h",
@@ -39,7 +36,7 @@ workbench_access_app_aud = workbench_tunnel_access_app.aud.apply(lambda aud: f"{
 workbench_tunnel = cloudflare.ZeroTrustTunnelCloudflared(
     "workbench-tunnel",
     account_id = account_id,
-    name = f"{workbench_name}-tunnel",
+    name = f"{app_subdomain}-{app_domain}-tunnel",
     config_src = "cloudflare",
 )
 

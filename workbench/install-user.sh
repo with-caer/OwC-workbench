@@ -11,15 +11,13 @@ if [ ! -e pulumi/Pulumi.dev.yaml ]; then
   echo "please create a pulumi/Pulumi.dev.yaml file, containing:"
   cat << EOF
 config:
-  workbench:name: "workbench"
-
   cloudflare:apiToken: "CLOUDFLARE_API_TOKEN"
 
-  cf:account_id: "CLOUDFLARE_ACCOUNT_ID"
-  cf:team_name: "CLOUDFLARE_TEAM_NAME"
-  cf:policy_id: "CLOUDFLARE_ZERO_ACCESS_POLICY_ID"
-  cf:app_domain: "CLOUDFLARE_ROOT_DOMAIN"
-  cf:app_subdomain: "CLOUDFLARE_SUB_DOMAIN"
+  account_id: "CLOUDFLARE_ACCOUNT_ID"
+  team_name: "CLOUDFLARE_TEAM_NAME"
+  policy_id: "CLOUDFLARE_ZERO_ACCESS_POLICY_ID"
+  app_domain: "CLOUDFLARE_ROOT_DOMAIN"
+  app_subdomain: "CLOUDFLARE_SUB_DOMAIN"
 EOF
   exit 1
 fi
@@ -60,9 +58,11 @@ export PATH="${PATH}:~/.pulumi/bin"
 pulumi login --local
 
 # Provision Cloudflare tunnel.
+export PULUMI_CONFIG_PASSPHRASE=""
+pulumi stack -C pulumi init dev
 pulumi install -C pulumi
 pulumi up -C pulumi
-CLOUDFLARE_TUNNEL_TOKEN = $(pulumi stack -C pulumi output workbench_tunnel_token)
+CLOUDFLARE_TUNNEL_TOKEN=$(pulumi stack -C pulumi output workbench_tunnel_token)
 
 # Install cloudflared tunnel, exposing the system to the internet.
 cloudflared service install $CLOUDFLARE_TUNNEL_TOKEN

@@ -1,0 +1,28 @@
+{
+    "files.watcherExclude": {
+        "**/target/**": true
+    },
+
+    "window.autoDetectColorScheme": true,
+    "window.autoDetectHighContrast": false,
+
+    "workbench.preferredDarkColorTheme": "Bearded Theme Monokai Terra",
+    "workbench.preferredLightColorTheme": "Bearded Theme feat. Melle Julie Light",
+    "workbench.colorTheme": "Bearded Theme feat. Melle Julie Light",
+    "workbench.startupEditor": "none",
+    "workbench.editor.enablePreview": false,
+    "workbench.activityBar.location": "top",
+    
+    "editor.wordWrap": "on",
+    "editor.fontFamily": "'Inconsolata', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 15,
+    "editor.fontLigatures": true,
+    "editor.cursorStyle": "underline",
+    "editor.minimap.enabled": false,
+    
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "underline",
+    "terminal.integrated.localEchoEnabled": "on",
+    "terminal.integrated.localEchoStyle": "bold",
+    "terminal.integrated.localEchoLatencyThreshold": 10
+}

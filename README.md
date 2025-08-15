@@ -11,7 +11,8 @@ for Cargo (Rust) workspaces.
 
 2. `workbench/` contains shell scripts for provisioning development environments
 ("workspaces") and [Pulumi](https://www.pulumi.com) templates for exposing
-them over the internet via Cloudflare tunneling.
+them over the internet via [code-server](https://github.com/coder/code-server) and
+[Cloudflare Tunnels](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/).
 
 ## License and Contributions 
 

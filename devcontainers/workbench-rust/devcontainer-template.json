@@ -1,6 +1,0 @@
-{
-    "id": "workbench-rust",
-    "version": "0.0.1",
-    "name": "Workbench for Rustaceans",
-    "platforms": ["Rust"]
-}

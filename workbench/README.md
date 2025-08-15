@@ -7,6 +7,9 @@ intended to be hosted on dedicated VMs or physical workstations.
 
 ## What's Here
 
+To perform a complete installation with all of the steps below,
+run `./auto-install.sh` as a non-`root` user with existing `sudo` access.
+
 ### Basic System Configuration
 
 0. `./configure-packages.sh` (run as `root`): Configures the DNF package manager and performs an initial refresh of all installed packages.

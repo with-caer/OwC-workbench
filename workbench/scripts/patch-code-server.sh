@@ -47,22 +47,22 @@ replace_key_value $PRODUCT_JSON_PATH applicationName "\"${WORKBENCH_NAME}\""
 replace_key_value $PRODUCT_JSON_PATH enableTelemetry false
 
 # Restyle the application favicons.
-cp icon.ico $WORKBENCH_ICON_PATH/favicon.ico
-cp icon.svg $WORKBENCH_ICON_PATH/favicon.svg
-cp icon.svg $WORKBENCH_ICON_PATH/favicon-dark-support.svg
-cp icon-192.png $WORKBENCH_ICON_PATH/pwa-icon-192.png
-cp icon-512.png $WORKBENCH_ICON_PATH/pwa-icon-512.png
-cp icon-540.png $WORKBENCH_ICON_PATH/pwa-icon.png
+cp ../assets/icon.ico $WORKBENCH_ICON_PATH/favicon.ico
+cp ../assets/icon.svg $WORKBENCH_ICON_PATH/favicon.svg
+cp ../assets/icon.svg $WORKBENCH_ICON_PATH/favicon-dark-support.svg
+cp ../assets/icon-192.png $WORKBENCH_ICON_PATH/pwa-icon-192.png
+cp ../assets/icon-512.png $WORKBENCH_ICON_PATH/pwa-icon-512.png
+cp ../assets/icon-540.png $WORKBENCH_ICON_PATH/pwa-icon.png
 
 # Restyle the application logo.
-cp logo.svg $WORKBENCH_LOGO_PATH/code-icon.svg
+cp ../assets/logo.svg $WORKBENCH_LOGO_PATH/code-icon.svg
 
 # Restyle the background logos that are rendered when
 # no files are open in the editor (the "letterpress").
-cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-light.svg
-cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcLight.svg
-cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-dark.svg
-cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcDark.svg
+cp ../assets/letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-light.svg
+cp ../assets/letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcLight.svg
+cp ../assets/letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-dark.svg
+cp ../assets/letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcDark.svg
 
 # Potentially fix cursor duplication bug on iPadOS.
 # Related issue: https://github.com/microsoft/vscode/issues/121195
@@ -72,8 +72,8 @@ perl -i -pe $EXPR $WORKBENCH_CSS_PATH
 
 # Install fonts.
 # https://github.com/tuanpham-dev/code-server-font-patch/blob/master/patch.sh
-cp -rn fonts/*.ttf $WORKBENCH_CSS_PARENT_PATH/
-cat fonts/inconsolata.css | sudo tee -a $WORKBENCH_CSS_PATH
+cp -rn ../assets/fonts/*.ttf $WORKBENCH_CSS_PARENT_PATH/
+cat ../assets/fonts/inconsolata.css | sudo tee -a $WORKBENCH_CSS_PATH
 
 # @caer: todo: Restyle the Welcome page
 # https://github.com/coder/code-server/blob/095c072a43e6abf4eee163d81af9115d7000c4ce/patches/getting-started.diff#L35

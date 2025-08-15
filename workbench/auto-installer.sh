@@ -3,22 +3,24 @@
 # Exit on first error.
 set -e
 
+cd scripts
+
 # Basic system configuration.
-sudo ./configure-packages.sh
-sudo ./configure-user.sh $(whoami)
+sudo sh configure-packages.sh
+sudo sh configure-user.sh $(whoami)
 
 # Networking configuration.
-sudo ./configure-network.sh
-sudo ./configure-code-server.sh $(whoami)
+sudo sh configure-network.sh
+sudo sh configure-code-server.sh $(whoami)
 
 # Expose to internet.
-./provision-code-server-network.sh
+sh provision-code-server-network.sh
 
 # Install default packages.
-sudo ./install-default-packages.sh
-./install-default-rust-packages.sh
-./install-default-code-server-extensions.sh
+sudo sh install-default-packages.sh
+sh install-default-rust-packages.sh
+sh install-default-code-server-extensions.sh
 
 # Install default settings.
-cp default-vscode-setings.json ${HOME}/.local/share/code-server/User/settings.json
-cat ./default-bashrc.sh >> ${HOME}/.bashrc
+cp ../assets/default-vscode-setings.json ${HOME}/.local/share/code-server/User/settings.json
+cat ../assets/default-bashrc.sh >> ${HOME}/.bashrc

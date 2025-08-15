@@ -15,8 +15,8 @@ WORKBENCH_PATH=/usr/lib/code-server
 PRODUCT_JSON_PATH=$WORKBENCH_PATH/lib/vscode/product.json
 
 # Path to the VS Code main CSS file for the workbench.
-WORKBENCH_CSS_PARENT_PATH=$WORKBENCH_PATH/lib/vscode/out/vs/workbench
-WORKBENCH_CSS_PATH=$WORKBENCH_CSS_PARENT_PATH/workbench.web.main.css
+WORKBENCH_CSS_PARENT_PATH=$WORKBENCH_PATH/lib/vscode/out/vs/code/browser/workbench
+WORKBENCH_CSS_PATH=$WORKBENCH_CSS_PARENT_PATH/workbench.css
 
 # Path to the VS Code path containing favicons.
 WORKBENCH_ICON_PATH=$WORKBENCH_PATH/src/browser/media
@@ -63,23 +63,6 @@ cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-light.svg
 cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcLight.svg
 cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-dark.svg
 cp letterpress.svg $WORKBENCH_LOGO_PATH/letterpress-hcDark.svg
-
-# @caer: todo: These steps below used to be required
-#        in order to restyle the letterpress. It appears
-#        that, at least as-of version 4.103.0 of code-server,
-#        these steps are _no longer_ required.
-# REPL=$(cat caer.svg.base64)
-# REPL="data:image\/svg+xml;base64,$REPL"
-# Match all instances of the letterpress.
-# EXPR='(letterpress\s*\{\s*.*?background-image:\s*url)\("(.*?)"\)'
-# EXPR="s/$EXPR/\$1(\"$REPL\")/g"
-# perl -i -pe $EXPR $WORKBENCH_CSS_PATH
-# Match the dark theme letterpress.
-# EXPR=\(vs-dark.*?letterpress\s*\\{\s*.*?background-image:\s*url\)\("(.*?)"\)
-# Match the high-contrast light theme letterpress.
-# EXPR=\(hc-light.*?letterpress\s*\\{\s*.*?background-image:\s*url\)\("(.*?)"\)
-# Match the high-contrast dark theme letterpress.
-# EXPR=\(hc-black.*?letterpress\s*\\{\s*.*?background-image:\s*url\)\("(.*?)"\)
 
 # Potentially fix cursor duplication bug on iPadOS.
 # Related issue: https://github.com/microsoft/vscode/issues/121195

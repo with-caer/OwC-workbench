@@ -16,6 +16,10 @@ them over the internet via [code-server](https://github.com/coder/code-server) a
 
 ## License and Contributions 
 
+Images and logos are Copyright 2025 With Caer, LLC, all rights reserved.
+
+All other content:
+
 Copyright 2025 With Caer, LLC.
 
 Licensed under the GNU Affero General Public License version 3,

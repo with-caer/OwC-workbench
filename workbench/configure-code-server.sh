@@ -2,11 +2,10 @@
 
 CODE_SERVER_VERSION="${CODE_SERVER_VERSION:-4.103.0}"
 CODE_SERVER_ARCH="${CODE_SERVER_ARCH:-amd64}"
+USER_NAME=$1
 
 # Exit on first error.
 set -e
-
-USER_NAME=$1
 
 # Install packages, then clean-up the DNF cache.
 dnf install -y wget

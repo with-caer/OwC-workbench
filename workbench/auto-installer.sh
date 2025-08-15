@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Exit on first error.
 set -e
 
 # Basic system configuration.

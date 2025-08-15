@@ -4,8 +4,7 @@ This repository contains a collection of  tools and templates for creating, depl
 
 ## What's Here
 
-0. `.devcontainer` contains a pre-configured development container
-for Cargo (Rust) workspaces.
+0. `devcontainers/` contains templates for [Dev Containers](https://containers.dev).
 
 1. `ops/` contains shell scripts for committing code to, and releasing code from, Cargo workspaces.
 

@@ -19,3 +19,6 @@ jobs:
           publish-templates: "true"
           base-path-to-templates: "./devcontainers"
           generate-docs: "false"
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,46 +1,58 @@
 #!/bin/sh
-#
-# Usage: ./ops/commit.sh [Commit Type] "my commit message"
-#
-# Where [Commit Type] is one of:
-declare -a commitTypes=("feat" "docs" "fix" "ops")
+
+# Default global configuration path for OWC scripts.
+OWC_CONFIG_PATH=/usr/local/etc/owc
+
+# Supported commit types.
+declare -a COMMIT_TYPES=("feat" "docs" "fix" "ops")
+
+# Load script metadata.
+script_name=$0
+script_dir=$( cd -- "$( dirname -- "$script_name}" )" &> /dev/null && pwd )
+
+# Try loading configs from a common directory,
+# falling back to the script directory if needed.
+config_path=${script_dir}
+if [ -e ${OWC_CONFIG_PATH}/git-cliff.toml ]; then
+    config_path=${OWC_CONFIG_PATH}
+fi
 
 # Check arguments.
 if [ "$#" -lt 2 ]; then
     echo "please provide a commit type and message. examples:\n"
-    echo "  ./ops/commit.sh feat \"added a new feature\""
-    echo "  ./ops/commit.sh docs \"edited some documentation\""
-    echo "  ./ops/commit.sh fix \"fixed an issue\""
-    echo "  ./ops/commit.sh ops \"improved the ci/cd pipeline\""
+    echo "  ${script_name} feat \"added a new feature\""
+    echo "  ${script_name} docs \"edited some documentation\""
+    echo "  ${script_name} fix \"fixed an issue\""
+    echo "  ${script_name} ops \"improved the ci/cd pipeline\""
     exit 1
 fi
 
 # Extract arguments, merging all excess
 # arguments into the commit message.
-commitType=$1
-commitMessage=$2
+commit_type=$1
+commit_message=$2
 while shift && [ -n "$2" ]; do
-    commitMessage="${commitMessage} $2"
+    commit_message="${commit_message} $2"
 done
-commitMessage="${commitType}: ${commitMessage}"
+commit_message="${commit_type}: ${commit_message}"
 
 # Only allow supported commit types.
-if [[ ! " ${commitTypes[*]} " =~ [[:space:]]${commitType}[[:space:]] ]]; then
-    echo "${commitType} is not one of: ${commitTypes[*]}"
+if [[ ! " ${COMMIT_TYPES[*]} " =~ [[:space:]]${commit_type}[[:space:]] ]]; then
+    echo "${commit_type} is not one of: ${COMMIT_TYPES[*]}"
     exit 1
 fi
 
 # Normalize commit dates.
-UTC_DAY_BEGIN=$(TZ=0 date +%F)T00:00:00+0000 
+utc_day_begin=$(TZ=0 date +%F)T00:00:00+0000 
 
 # Update changelogs for all crates.
 ls */Cargo.toml | while read; do
-    cratePath=${REPLY%/*}
+    crate_path=${REPLY%/*}
 
     # Only udpate changelogs for crate paths affected by this commit.
-    if [ ! -z "$(git status --porcelain ${cratePath})" ]; then
-        cd ${cratePath}
-        git cliff --with-commit "${commitMessage}" --config ../ops/git-cliff.toml -o CHANGELOG.md
+    if [ ! -z "$(git status --porcelain ${crate_path})" ]; then
+        cd ${crate_path}
+        git cliff --with-commit "${commit_message}" --config ${config_path}/git-cliff.toml -o CHANGELOG.md
         cd ..
     fi
 done | sort -u
@@ -49,10 +61,10 @@ done | sort -u
 git add --all .
 
 # Preview staged changes and commit message.
-echo "\npreview of commit @ ${UTC_DAY_BEGIN}:\n"
+echo "\npreview of commit @ ${utc_day_begin}:\n"
 git -c color.status=always status --short | grep '^\(\x1b\[[0-9]\{1,2\}m\)\{0,1\}[MARCD]'| sed -e 's/^/  /'
 echo
-echo "  ${commitMessage}\n"
+echo "  ${commit_message}\n"
 
 # Prompt for commit confirmation.
 read -p "commit (y / N)? " -n 1 -r
@@ -61,7 +73,7 @@ echo
 # Execute commit if yes.
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    GIT_AUTHOR_DATE=$UTC_DAY_BEGIN GIT_COMMITTER_DATE=$UTC_DAY_BEGIN git commit -m "${commitMessage}"
+    GIT_AUTHOR_DATE=$utc_day_begin GIT_COMMITTER_DATE=$utc_day_begin git commit -m "${commit_message}"
 
 # Abort commit if no.
 else

@@ -17,10 +17,10 @@ Alternatively, the  [`install-local.sh`](install-local.sh) script can be used to
 Workbenches (when provided as a pre-built Dev Container, or when installed via the local installer script) come with a set of pre-installed command-line tools:
 
 - [`owc-commit`](tools/commit.sh): A thin wrapper around `git` for performing ["Conventional Commits"](https://www.conventionalcommits.org/en/v1.0.0/) with
-auto-generated changelogs
-normalized timestamps.
+auto-generated changelogs normalized timestamps.
 
-- [`owc-release`](tools/release.sh): A thin wrapper around [`cargo release`]
+- [`owc-release`](tools/release.sh): A thin wrapper around [`cargo release`](https://github.com/crate-ci/cargo-release) for publishing Rust workspaces to
+[crates.io](https://crates.io) with auto-generated changelogs and semantic versioning.
 
 These tools can be _manually_ installed onto any UNIX system via the [`install-tools.sh`](install-tools.sh) script. Tools will be installed to `/usr/local/bin`, and their default configurations will be installed into `/usr/local/etc/owc`.
 

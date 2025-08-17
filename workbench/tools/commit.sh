@@ -2,6 +2,11 @@
 
 # Default global configuration path for OWC scripts.
 OWC_CONFIG_PATH=/usr/local/etc/owc
+config_path=${OWC_CONFIG_PATH}
+if [ ! -e ${config_path}/git-cliff.toml ]; then
+    printf "${config_path}//git-cliff.toml is missing; please (re)install workbench tools\n"
+    exit 1
+fi
 
 # Supported commit types.
 declare -a COMMIT_TYPES=("feat" "docs" "fix" "ops")
@@ -9,13 +14,6 @@ declare -a COMMIT_TYPES=("feat" "docs" "fix" "ops")
 # Load script metadata.
 script_name=$0
 script_dir=$( cd -- "$( dirname -- "$script_name}" )" &> /dev/null && pwd )
-
-# Try loading configs from a common directory,
-# falling back to the script directory if needed.
-config_path=${script_dir}
-if [ -e ${OWC_CONFIG_PATH}/git-cliff.toml ]; then
-    config_path=${OWC_CONFIG_PATH}
-fi
 
 # Check arguments.
 if [ "$#" -lt 2 ]; then
@@ -76,17 +74,17 @@ git diff --name-status --cached | while read -r line; do
     if [[ $line == M* ]]; then # Modified
         printf "  ${GREEN}${line}${NORMAL}\n"
     elif [[ $line == T* ]]; then # File Type Changed
-        printf "  ${MAGENTA}${line}${NORMAL}\n"
+        printf "  ${PURPLE}${line}${NORMAL}\n"
     elif [[ $line == A* ]]; then # Addded
         printf "  ${GREEN}${line}${NORMAL}\n"
     elif [[ $line == D* ]]; then # Deleted
-        printf "  ${PURPLE}${line}${NORMAL}\n"
+        printf "  ${MAGENTA}${line}${NORMAL}\n"
     elif [[ $line == R* ]]; then # Renamed
-        printf "  ${GREEN}${line}${NORMAL}\n"
+        printf "  ${PURPLE}${line}${NORMAL}\n"
     elif [[ $line == C* ]]; then # Copied
-        printf "  ${MAGENTA}${line}${NORMAL}\n"
+        printf "  ${PURPLE}${line}${NORMAL}\n"
     elif [[ $line == U* ]]; then # Updated but unmerged
-        printf "  ${MAGENTA}${line}${NORMAL}\n"
+        printf "  ${PURPLE}${line}${NORMAL}\n"
     else # Unrecognized
         printf "  ${BOLD}${commit_message}${NORMAL}\n"
     fi

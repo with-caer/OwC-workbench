@@ -2,6 +2,11 @@
 
 # Default global configuration path for OWC scripts.
 OWC_CONFIG_PATH=/usr/local/etc/owc
+config_path=${OWC_CONFIG_PATH}
+if [ ! -e ${config_path}/cargo-release.toml ]; then
+    printf "${config_path}/cargo-release.toml is missing; please (re)install workbench tools\n"
+    exit 1
+fi
 
 # Supported release types.
 #
@@ -12,13 +17,6 @@ declare -a RELEASE_TYPES=("patch" "minor" "major")
 # Load script metadata.
 script_name=$0
 script_dir=$( cd -- "$( dirname -- "$script_name}" )" &> /dev/null && pwd )
-
-# Try loading configs from a common directory,
-# falling back to the script directory if needed.
-config_path=${script_dir}
-if [ -e ${OWC_CONFIG_PATH}/cargo-release.toml ]; then
-    config_path=${OWC_CONFIG_PATH}
-fi
 
 # Check arguments.
 if [ "$#" -lt 1 ]; then

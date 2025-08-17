@@ -42,7 +42,7 @@ fi
 cp ${SCRIPT_DIR}/assets/default-vscode-setings.json /home/${WORKBENCH_USER_NAME}/.local/share/code-server/User/settings.json
 cat ${SCRIPT_DIR}/assets/default-bashrc.sh >> /home/${WORKBENCH_USER_NAME}/.bashrc
 
-# InstallPyinfra dependencies.
+# Install Pyinfra dependencies.
 dnf install pipx
 pipx install pyinfra
 

@@ -20,9 +20,9 @@ RUN dnf install -y libX11-devel libXi-devel mesa-libGL-devel alsa-lib-devel
 COPY workbench/assets/default-bashrc.sh /root/.bashrc
 
 # Install OWC operations scripts.
-COPY ops/commit.sh /usr/local/bin/owc-commit
-COPY ops/release.sh /usr/local/bin/owc-release
+COPY workbench/tools/commit.sh /usr/local/bin/owc-commit
+COPY workbench/tools/release.sh /usr/local/bin/owc-release
 
 # Install default OWC operations configurations.
-COPY ops/cargo-release.toml /usr/local/etc/owc/cargo-release.toml
-COPY ops/git-cliff.toml /usr/local/etc/owc/git-cliff.toml
+COPY workbench/tools/cargo-release.toml /usr/local/etc/owc/cargo-release.toml
+COPY workbench/tools/git-cliff.toml /usr/local/etc/owc/git-cliff.toml

@@ -22,10 +22,10 @@ fi
 
 # Check arguments.
 if [ "$#" -lt 1 ]; then
-    echo "please provide a release type. examples:\n"
-    echo "  ${script_name} patch"
-    echo "  ${script_name} minor"
-    echo "  ${script_name} major"
+    printf "please provide a release type. examples:\n"
+    printf "  ${script_name} patch"
+    printf "  ${script_name} minor"
+    printf "  ${script_name} major"
     exit 1
 fi
 
@@ -34,13 +34,13 @@ release_type=$1
 
 # Only allow supported release types.
 if [[ ! " ${RELEASE_TYPES[*]} " =~ [[:space:]]${release_type}[[:space:]] ]]; then
-    echo "${release_type} is not one of: ${RELEASE_TYPES[*]}"
+    printf "${release_type} is not one of: ${RELEASE_TYPES[*]}"
     exit 1
 fi
 
 # Only allow releases on a clean working directory.
 if [ ! -z "$(git status --porcelain)" ]; then
-    echo "aborting release: uncommited changes present in repository"
+    printf "aborting release: uncommited changes present in repository"
     exit 1
 fi
 
@@ -49,15 +49,10 @@ cargo fmt --check
 cargo clippy
 cargo test
 
-# Install release tooling if necessary.
-echo "installing release tooling..."
-cargo install -q cargo-release git-cliff
-echo "release tooling installed."
-
 # Dry-run release.
-echo "beginning release dry-run..."
+printf "beginning release dry-run..."
 cargo release $release_type --config ${config_path}/cargo-release.toml
-echo "cleaning up dry-run changes..."
+printf "cleaning up dry-run changes..."
 git stash
 
 # Prompt for commit confirmation.

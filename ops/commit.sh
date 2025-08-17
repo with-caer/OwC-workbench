@@ -19,11 +19,11 @@ fi
 
 # Check arguments.
 if [ "$#" -lt 2 ]; then
-    echo "please provide a commit type and message. examples:\n"
-    echo "  ${script_name} feat \"added a new feature\""
-    echo "  ${script_name} docs \"edited some documentation\""
-    echo "  ${script_name} fix \"fixed an issue\""
-    echo "  ${script_name} ops \"improved the ci/cd pipeline\""
+    printf "please provide a commit type and message. examples:\n"
+    printf "  ${script_name} feat \"added a new feature\""
+    printf "  ${script_name} docs \"edited some documentation\""
+    printf "  ${script_name} fix \"fixed an issue\""
+    printf "  ${script_name} ops \"improved the ci/cd pipeline\""
     exit 1
 fi
 
@@ -38,7 +38,7 @@ commit_message="${commit_type}: ${commit_message}"
 
 # Only allow supported commit types.
 if [[ ! " ${COMMIT_TYPES[*]} " =~ [[:space:]]${commit_type}[[:space:]] ]]; then
-    echo "${commit_type} is not one of: ${COMMIT_TYPES[*]}"
+    printf "${commit_type} is not one of: ${COMMIT_TYPES[*]}"
     exit 1
 fi
 
@@ -61,14 +61,13 @@ done | sort -u
 git add --all .
 
 # Preview staged changes and commit message.
-echo "\npreview of commit @ ${utc_day_begin}:\n"
+printf "\npreview of commit @ ${utc_day_begin}:\n"
 git -c color.status=always status --short | grep '^\(\x1b\[[0-9]\{1,2\}m\)\{0,1\}[MARCD]'| sed -e 's/^/  /'
-echo
-echo "  ${commit_message}\n"
+printf "  \n${commit_message}\n"
 
 # Prompt for commit confirmation.
 read -p "commit (y / N)? " -n 1 -r
-echo
+printf ""
 
 # Execute commit if yes.
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -77,5 +76,5 @@ then
 
 # Abort commit if no.
 else
-    echo "commit aborted"
+    printf "commit aborted"
 fi

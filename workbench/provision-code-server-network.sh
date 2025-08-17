@@ -19,13 +19,6 @@ EOF
   exit 1
 fi
 
-# Register custom repositories.
-sudo dnf config-manager addrepo --from-repofile=https://pkg.cloudflare.com/cloudflared-ascii.repo
-
-# Install packages, then clean-up the DNF cache.
-sudo dnf install -y cloudflared curl
-sudo dnf -y clean all && rm -rf /var/cache && df -h && rm -rf /tmp/user-packages.txt
-
 # Configure Pulumi.
 curl -fsSL https://get.pulumi.com | sh
 export PATH="${PATH}:~/.pulumi/bin"

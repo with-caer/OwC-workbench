@@ -38,4 +38,6 @@ EOF
 systemctl enable --now code-server
 
 # Configure code server.
+cd ../assets
 sh patch-code-server.sh
+cd ../scripts

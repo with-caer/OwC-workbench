@@ -1,26 +1,27 @@
 # **O**perations **w**ith **C**aer
 
-This repository contains a collection of  tools and templates for creating, deploying, and operating systems and services.
+This repository contains a collection of reusable tooling to support development environments
+(_"Workbenches"_), and servers deployed as part of production systems and services.
 
 ## What's Here
 
-0. `devcontainers/` contains templates for [Dev Containers](https://containers.dev).
+> _Note_: For consistency, OWC tooling and infrastructure are built around
+> RHEL-style hosts, like Fedora and Rocky Linux.
 
-1. `ops/` contains shell scripts for committing code to, and releasing code from, Cargo workspaces.
+1. `workbench/` contains templates for creating development environments.
 
-2. `workbench/` contains shell scripts for provisioning development environments
-("workspaces") and [Pulumi](https://www.pulumi.com) templates for exposing
-them over the internet via [code-server](https://github.com/coder/code-server) and
-[Cloudflare Tunnels](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/).
+2. `devcontainers/` contains pre-built workbench [Dev Container](https://containers.dev) images.
+
+Refer to the individual directories' READMEs for more info.
 
 ## License and Contributions 
 
-Images and logos are Copyright 2025 With Caer, LLC, all rights reserved.
+Graphical assets like pictures, imagery, and logos:
+> Copyright 2025 With Caer, LLC, all rights reserved.
 
 All other content:
-
-Copyright 2025 With Caer, LLC.
-
-Licensed under the GNU Affero General Public License version 3,
-as published by the Free Software Foundation. Refer to 
-[the license file](LICENSE.txt) for more information.
+> Copyright 2025 With Caer, LLC.
+> 
+> Licensed under the GNU Affero General Public License version 3,
+> as published by the Free Software Foundation. Refer to 
+> [the license file](LICENSE.txt) for more information.

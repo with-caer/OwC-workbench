@@ -1,7 +1,9 @@
 {
     "build": {
         "dockerfile": "./Dockerfile",
-        "context": "."
+
+        // Build devcontainer from the repository root.
+        "context": "../../../"
     },
     
     "customizations": {

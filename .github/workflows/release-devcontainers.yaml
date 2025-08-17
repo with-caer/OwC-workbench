@@ -1,4 +1,4 @@
-name: "Release Dev Container Images"
+name: "Release Workbench Dev Container Images"
 
 on:
   workflow_dispatch:

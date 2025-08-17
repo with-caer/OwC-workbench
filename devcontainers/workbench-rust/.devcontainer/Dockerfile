@@ -4,7 +4,7 @@ FROM fedora:43
 RUN dnf install -y awk curl wget hostname git gcc g++ cmake
 
 # Common customizations.
-COPY .bashrc /root/.bashrc
+COPY workbench/assets/default-bashrc.sh /root/.bashrc
 
 # Rust toolchain.
 RUN dnf install -y rustup

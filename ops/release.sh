@@ -23,9 +23,9 @@ fi
 # Check arguments.
 if [ "$#" -lt 1 ]; then
     printf "please provide a release type. examples:\n"
-    printf "  ${script_name} patch"
-    printf "  ${script_name} minor"
-    printf "  ${script_name} major"
+    printf "  ${script_name} patch\n"
+    printf "  ${script_name} minor\n"
+    printf "  ${script_name} major\n"
     exit 1
 fi
 
@@ -34,13 +34,13 @@ release_type=$1
 
 # Only allow supported release types.
 if [[ ! " ${RELEASE_TYPES[*]} " =~ [[:space:]]${release_type}[[:space:]] ]]; then
-    printf "${release_type} is not one of: ${RELEASE_TYPES[*]}"
+    printf "${release_type} is not one of: ${RELEASE_TYPES[*]}\n"
     exit 1
 fi
 
 # Only allow releases on a clean working directory.
 if [ ! -z "$(git status --porcelain)" ]; then
-    printf "aborting release: uncommited changes present in repository"
+    printf "aborting release: uncommited changes present in repository\n"
     exit 1
 fi
 
@@ -50,14 +50,14 @@ cargo clippy
 cargo test
 
 # Dry-run release.
-printf "beginning release dry-run..."
+printf "beginning release dry-run...\n"
 cargo release $release_type --config ${config_path}/cargo-release.toml
-printf "cleaning up dry-run changes..."
+printf "cleaning up dry-run changes...\n"
 git stash
 
 # Prompt for commit confirmation.
 read -p "execute release (y / N)? " -n 1 -r
-echo
+printf "\n"
 
 # Execute release if yes.
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -67,5 +67,5 @@ then
     GIT_AUTHOR_DATE=$utc_day_begin GIT_COMMITTER_DATE=$utc_day_begin cargo release $releaseType --config ${config_path}/cargo-release.toml --execute
 # Abort commit if no.
 else
-    echo "release aborted"
+    printf "release aborted\n"
 fi

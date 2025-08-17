@@ -19,11 +19,11 @@ fi
 
 # Check arguments.
 if [ "$#" -lt 2 ]; then
-    printf "please provide a commit type and message. examples:\n"
-    printf "  ${script_name} feat \"added a new feature\""
-    printf "  ${script_name} docs \"edited some documentation\""
-    printf "  ${script_name} fix \"fixed an issue\""
-    printf "  ${script_name} ops \"improved the ci/cd pipeline\""
+    printf "please provide a commit type and message. examples:\n\n"
+    printf "  ${script_name} feat \"added a new feature\"\n"
+    printf "  ${script_name} docs \"edited some documentation\"\n"
+    printf "  ${script_name} fix \"fixed an issue\"\n"
+    printf "  ${script_name} ops \"improved the ci/cd pipeline\"\n"
     exit 1
 fi
 
@@ -60,14 +60,43 @@ done | sort -u
 # Stage all changes and show the staged changes to the user.
 git add --all .
 
+# Cache color codes for terminal rendering.
+GREEN=\\x01$(tput setaf 2)\\x02
+MAGENTA=\\x01$(tput setaf 198)\\x02
+PURPLE=\\x01$(tput setaf 5)\\x02
+BOLD=\\x01$(tput bold)\\x02
+NORMAL=\\x01$(tput sgr0)\\x02
+YELLOW=\\x01$(tput setaf 3)\\x02
+
 # Preview staged changes and commit message.
-printf "\npreview of commit @ ${utc_day_begin}:\n"
-git -c color.status=always status --short | grep '^\(\x1b\[[0-9]\{1,2\}m\)\{0,1\}[MARCD]'| sed -e 's/^/  /'
-printf "  \n${commit_message}\n"
+printf "\n${YELLOW}preview of commit @ ${utc_day_begin}:${NORMAL}\n\n"
+git diff --name-status --cached | while read -r line; do
+
+    # See: https://git-scm.com/docs/git-status#_short_format
+    if [[ $line == M* ]]; then # Modified
+        printf "  ${GREEN}${line}${NORMAL}\n"
+    elif [[ $line == T* ]]; then # File Type Changed
+        printf "  ${MAGENTA}${line}${NORMAL}\n"
+    elif [[ $line == A* ]]; then # Addded
+        printf "  ${GREEN}${line}${NORMAL}\n"
+    elif [[ $line == D* ]]; then # Deleted
+        printf "  ${PURPLE}${line}${NORMAL}\n"
+    elif [[ $line == R* ]]; then # Renamed
+        printf "  ${GREEN}${line}${NORMAL}\n"
+    elif [[ $line == C* ]]; then # Copied
+        printf "  ${MAGENTA}${line}${NORMAL}\n"
+    elif [[ $line == U* ]]; then # Updated but unmerged
+        printf "  ${MAGENTA}${line}${NORMAL}\n"
+    else # Unrecognized
+        printf "  ${BOLD}${commit_message}${NORMAL}\n"
+    fi
+done
+
+printf "  \n${YELLOW}${commit_message}${NORMAL}\n\n"
 
 # Prompt for commit confirmation.
 read -p "commit (y / N)? " -n 1 -r
-printf ""
+printf "\n"
 
 # Execute commit if yes.
 if [[ $REPLY =~ ^[Yy]$ ]]

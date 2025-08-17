@@ -19,12 +19,12 @@ if [ "$#" -lt 1 ]; then
 fi
 
 # Parse arguments.
-SCRIPT_DIR=$( cd -- "$( dirname -- "$0}" )" &> /dev/null && pwd )
-WORKBENCH_USER_NAME=$1
+script_dir=$( cd -- "$( dirname -- "$0}" )" &> /dev/null && pwd )
+workbench_user_name=$1
 
 # Check configuration.
-if [ ! -e ${SCRIPT_DIR}/pulumi/Pulumi.dev.yaml ]; then
-    echo "please create ${SCRIPT_DIR}/pulumi/Pulumi.dev.yaml, containing:"
+if [ ! -e ${script_dir}/pulumi/Pulumi.dev.yaml ]; then
+    echo "please create ${script_dir}/pulumi/Pulumi.dev.yaml, containing:"
     cat << EOF
 config:
   cloudflare:apiToken: "CLOUDFLARE_API_TOKEN"
@@ -39,17 +39,20 @@ EOF
 fi
 
 # Install default settings.
-cp ${SCRIPT_DIR}/assets/default-vscode-setings.json /home/${WORKBENCH_USER_NAME}/.local/share/code-server/User/settings.json
-cat ${SCRIPT_DIR}/assets/default-bashrc.sh >> /home/${WORKBENCH_USER_NAME}/.bashrc
+cp ${script_dir}/assets/default-vscode-setings.json /home/${workbench_user_name}/.local/share/code-server/User/settings.json
+cat ${script_dir}/assets/default-bashrc.sh >> /home/${workbench_user_name}/.bashrc
 
 # Install Pyinfra dependencies.
 dnf install pipx
 pipx install pyinfra
 
 # Execute PyInfra provisioner.
-cd ${SCRIPT_DIR}/pyinfra
+cd ${script_dir}/pyinfra
 pyinfra inventory_local.py deploy.py -y
-cd ${SCRIPT_DIR}
+cd ${script_dir}
+
+# Install tools.
+./${script_dir}/install-tools.sh
 
 # Install Pulumi dependencies.
 curl -fsSL https://get.pulumi.com | sh

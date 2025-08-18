@@ -1,7 +1,7 @@
 FROM fedora:43
 
 # Common development packages.
-RUN dnf install -y awk curl wget hostname git gcc g++ cmake
+RUN dnf install -y awk curl wget hostname git gcc g++ cmake openssl openssl-devel
 
 # Rust toolchain.
 RUN dnf install -y rustup

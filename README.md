@@ -1,22 +1,28 @@
 # **O**perations **w**ith **C**aer
 
-This repository contains a collection of reusable tooling to support development environments
-(_"Workbenches"_), and servers deployed as part of production systems and services.
+Reusable tooling for development environments (_"Workbenches"_)
+and production server operations.
 
-## What's Here
+> _Note_: OwC tooling is built primarily for Fedora and Rocky Linux hosts.
 
-> _Note_: For consistency, OWC tooling and infrastructure are built around
-> RHEL-style hosts, like Fedora and Rocky Linux.
+## Getting Started
 
-1. `workbench/` contains templates for creating development environments.
+There's three ways to get started with OwC tooling:
 
-2. `devcontainers/` contains pre-built workbench [Dev Container](https://containers.dev) images.
+- Installing the [Workbench Tools](workbench/README.md#workbench-tools)
+directly onto any UNIX-compatible system.
 
-Refer to the individual directories' READMEs for more info.
+- Using one of the prebuilt [dev containers](devcontainers), which include
+all of the workbench tools along with some recommended default packages.
+
+- Configuring a fresh VM or server as a [cloud workbench](workbench/README.md#with-a-vmservercomputer).
+
+Refer to the [dev containers](devcontainers/) and [workbench](workbench/)
+documentation for more info.
 
 ## License and Contributions 
 
-Graphical assets like pictures, imagery, and logos:
+Artistic assets like pictures, imagery, and logos:
 > Copyright 2025 With Caer, LLC, all rights reserved.
 
 All other content:

@@ -17,12 +17,12 @@ RUN cargo binstall --no-confirm cargo-audit cargo-server cargo-release git-cliff
 RUN dnf install -y libX11-devel libXi-devel mesa-libGL-devel alsa-lib-devel
 
 # Install common customizations.
-COPY workbench/assets/default-bashrc.sh /root/.bashrc
+COPY assets/default-bashrc.sh /root/.bashrc
 
 # Install OWC operations scripts.
-COPY workbench/tools/commit.sh /usr/local/bin/owc-commit
-COPY workbench/tools/release.sh /usr/local/bin/owc-release
+COPY tools/commit.sh /usr/local/bin/owc-commit
+COPY tools/release.sh /usr/local/bin/owc-release
 
 # Install default OWC operations configurations.
-COPY workbench/tools/cargo-release.toml /usr/local/etc/owc/cargo-release.toml
-COPY workbench/tools/git-cliff.toml /usr/local/etc/owc/git-cliff.toml
+COPY tools/cargo-release.toml /usr/local/etc/owc/cargo-release.toml
+COPY tools/git-cliff.toml /usr/local/etc/owc/git-cliff.toml

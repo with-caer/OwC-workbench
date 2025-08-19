@@ -12,13 +12,12 @@ There's three ways to get started with OwC tooling:
 - Installing the [Workbench Tools](workbench/README.md#workbench-tools)
 directly onto any UNIX-compatible system.
 
-- Using one of the prebuilt [dev containers](devcontainers), which include
-all of the workbench tools along with some recommended default packages.
+- Using the prebuilt [workbench dev container](workbench/README.md#with-a-dev-container), 
+which includes all of the workbench tools along with some recommended default packages.
 
 - Configuring a fresh VM or server as a [cloud workbench](workbench/README.md#with-a-vmservercomputer).
 
-Refer to the [dev containers](devcontainers/) and [workbench](workbench/)
-documentation for more info.
+Refer to the [workbench](workbench/) documentation for more info.
 
 ## License and Contributions 
 

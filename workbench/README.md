@@ -6,7 +6,13 @@ intended to be hosted on dedicated VMs, physical workstations, or [Dev Container
 ### With a Dev Container
 
 The easiest way to get started with Workbenches is to use
-one of the pre-built [Workbench Dev Containers](../devcontainers/).
+the pre-built [Workbench Dev Container](.devcontainer/):
+
+```json
+{
+    "image": "ghcr.io/with-caer/owc/workbench:latest"
+}
+```
 
 ### With a VM/Server/Computer
 

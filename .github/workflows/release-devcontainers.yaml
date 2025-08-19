@@ -1,4 +1,4 @@
-name: "Release Workbench Dev Container Images"
+name: "Release Dev Container Images"
 
 on:
   workflow_dispatch:
@@ -21,10 +21,10 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Publish `workbench-rust` Dev Container
+      - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/with-caer/workbench-rust
-          cacheFrom: ghcr.io/with-caer/workbench-rust
+          imageName: ghcr.io/with-caer/owc/workbench
+          cacheFrom: ghcr.io/with-caer/owc/workbench
           push: always
-          subFolder: devcontainers/workbench-rust
+          subFolder: workbench

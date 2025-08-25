@@ -12,8 +12,11 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+
+      # Checkout codebase.
       - uses: actions/checkout@v3
 
+      # Authorize the GitHub runner to connect to our registry.
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2 
         with:
@@ -21,6 +24,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Publish the Workbench dev container.
       - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
@@ -28,3 +32,14 @@ jobs:
           cacheFrom: ghcr.io/with-caer/owc/workbench
           push: always
           subFolder: workbench
+
+      # Publish the Workbench dev container features.
+      - name: Build and Publish `workbench-*` Dev Container features.
+        uses: devcontainers/action@v1
+        with:
+          publish-features: "true"
+          features-namespace: "with-caer/owc/workbench/"
+          base-path-to-features: "./workbench/"
+          generate-docs: "false"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,28 +1,31 @@
 FROM fedora:43
 
-# Common development packages.
-RUN dnf install -y awk curl wget hostname git gcc g++ cmake openssl openssl-devel
+# Install common OS-level development packages.
+RUN dnf install -y awk curl wget hostname \
+                   gcc g++ cmake \
+                   git \
+                   openssl openssl-devel
 
-# Rust toolchain.
+# Install the base Rust toolchain.
 RUN dnf install -y rustup
 RUN rustup-init -y
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Install the Rust WASM cross-compilation target.
 RUN rustup target add wasm32-unknown-unknown
 
-# Rust utilities.
+# Install `cargo-binstall` for installing pre-packaged cargo binaries.
 RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-RUN cargo binstall --no-confirm cargo-audit cargo-server cargo-release git-cliff
 
-# Macroquad support packages.
-RUN dnf install -y libX11-devel libXi-devel mesa-libGL-devel alsa-lib-devel
+# Install common Cargo binaries.
+RUN cargo binstall --no-confirm cargo-audit \
+                                cargo-server \
+                                cargo-release \
+                                git-cliff
 
-# Install common customizations.
+# Install workbench customizations.
 COPY assets/default-bashrc.sh /root/.bashrc
-
-# Install OWC operations scripts.
 COPY tools/commit.sh /usr/local/bin/owc-commit
 COPY tools/release.sh /usr/local/bin/owc-release
-
-# Install default OWC operations configurations.
 COPY tools/cargo-release.toml /usr/local/etc/owc/cargo-release.toml
 COPY tools/git-cliff.toml /usr/local/etc/owc/git-cliff.toml

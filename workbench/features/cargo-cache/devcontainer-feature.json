@@ -1,0 +1,22 @@
+{
+    "name": "OwC Workbench - Cargo Build Caching Support",
+    "id": "cargo-cache",
+    "version": "1.0.0",
+    "description": "Adds support for caching and prebuilding Cargo dependencies via cargo-chef to an OwC Workbench.",
+    "options": {
+        "src": {
+            "type": "string",
+            "default": "./",
+            "description": "The directory, relative to the workbench root, containing the Rust project to build."
+        },
+
+        "flags": {
+            "type": "string",
+            "default": "--release",
+            "description": "Flags to pass to the cargo build process."
+        }
+    },
+    "onCreateCommand": "cd ${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef prepare --recipe-path recipe.json",
+    "updateContentCommand": "cd ${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef cook ${containerEnv:WORKBENCH_CARGO_CACHE_FLAGS} --recipe-path recipe.json",
+    "installsAfter": []
+}

@@ -39,7 +39,7 @@ jobs:
         with:
           publish-features: "true"
           features-namespace: "with-caer/owc/workbench/"
-          base-path-to-features: "./workbench/"
+          base-path-to-features: "./workbench/features/"
           generate-docs: "false"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -16,6 +16,7 @@
             "description": "Flags to pass to the cargo build process."
         }
     },
-    "updateContentCommand": "cd ${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef prepare --recipe-path recipe.json && cargo chef cook ${containerEnv:WORKBENCH_CARGO_CACHE_FLAGS} --recipe-path recipe.json",
+    "onCreateCommand": "cd ${workspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef prepare --recipe-path recipe.json",
+    "updateContentCommand": "cd ${workspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef cook ${containerEnv:WORKBENCH_CARGO_CACHE_FLAGS} --recipe-path recipe.json",
     "installsAfter": []
 }

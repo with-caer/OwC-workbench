@@ -43,12 +43,6 @@ These tools can be _manually_ installed onto any UNIX system via the [`install-t
         "version": "1.3.2"
     },
 
-    // Dependency pre-caching via cargo-chef.
-    "ghcr.io/with-caer/owc/workbench/cargo-cache": {
-        "src": "./",
-        "flags": "--release"
-    },
-
     // Macroquad native libraries.
     "ghcr.io/with-caer/owc/workbench/macroquad": {},
 }

@@ -7,7 +7,7 @@ if [ ! -f /etc/redhat-release ]; then
 fi
 
 # Download the DuckDB C/C++ native libraries.
-wget https://github.com/duckdb/duckdb/releases/download/v${VERSION}/libduckdb-linux-amd64.zip -o libduckdb.zip
+wget https://github.com/duckdb/duckdb/releases/download/v${VERSION}/libduckdb-linux-amd64.zip -O libduckdb.zip
 
 # Prepare output path for the native libraries.
 mkdir -p /usr/local/etc/owc/features/duckdb

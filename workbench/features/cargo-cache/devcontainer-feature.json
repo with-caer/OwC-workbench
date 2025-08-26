@@ -1,21 +1,32 @@
 {
     "name": "OwC Workbench - Cargo Build Caching Support",
     "id": "cargo-cache",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Adds support for caching and prebuilding Cargo dependencies via cargo-chef to an OwC Workbench.",
     "options": {
         "src": {
             "type": "string",
             "default": "./",
             "description": "The directory, relative to the workbench root, containing the Rust project to build."
-        },
-
-        "flags": {
-            "type": "string",
-            "default": "--release",
-            "description": "Flags to pass to the cargo build process."
         }
     },
-    "updateContentCommand": "cd ${containerWorkspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC} && cargo chef prepare --recipe-path recipe.json && cargo chef cook ${containerEnv:WORKBENCH_CARGO_CACHE_FLAGS} --recipe-path recipe.json",
+    "onCreateCommand": [
+        // Copy the repository so that chef doesn't damage the source.
+        "mkdir -p /tmp/owc/workbench/cargo-cache",
+        "cp -r ${containerWorkspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC} /tmp/owc/workbench/cargo-cache",
+
+        // Build all dependencies in the temporary folder.
+        "cd /tmp/owc/workbench/cargo-cache",
+        "cargo chef prepare --recipe-path recipe.json",
+        "cargo chef cook --recipe-path recipe.json",
+        "cargo chef cook --release --recipe-path recipe.json",
+
+        // Copy target artifacts back to the source.
+        "cp -r /tmp/owc/workbench/cargo-cache/target ${containerWorkspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC}/target",
+
+        // Cleanup.
+        "cd ${containerWorkspaceFolder}/${containerEnv:WORKBENCH_CARGO_CACHE_SRC}",
+        "rm -rf /tmp/owc/workbench/cargo-cache"
+    ],
     "installsAfter": []
 }

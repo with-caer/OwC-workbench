@@ -1,7 +1,7 @@
 {
     "name": "OwC Workbench - Cargo Build Caching Support",
     "id": "cargo-cache",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Adds support for caching and prebuilding Cargo dependencies via cargo-chef to an OwC Workbench.",
     "options": {
         "src": {

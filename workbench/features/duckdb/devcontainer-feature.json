@@ -1,7 +1,7 @@
 {
     "name": "OwC Workbench - DuckDB Support",
     "id": "duckdb",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Adds support for DuckDB development (in Rust) to an OwC Workbench.",
     "options": {
         "version": {

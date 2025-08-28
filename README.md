@@ -21,12 +21,6 @@ Refer to the [workbench](workbench/) documentation for more info.
 
 ## License and Contributions 
 
-Artistic assets like pictures, imagery, and logos:
-> Copyright 2025 With Caer, LLC, all rights reserved.
+Copyright 2025 With Caer, LLC, all rights reserved.
 
-All other content:
-> Copyright 2025 With Caer, LLC.
-> 
-> Licensed under the GNU Affero General Public License version 3,
-> as published by the Free Software Foundation. Refer to 
-> [the license file](LICENSE.txt) for more information.
+Licensed under the MIT license. Refer to [the license file](https://github.com/with-caer/owc/blob/main/LICENSE.txt) for more info.

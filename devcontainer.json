@@ -1,0 +1,7 @@
+{
+    "image": "ghcr.io/with-caer/owc/workbench:latest",
+    "features": {
+        "ghcr.io/with-caer/owc/workbench/duckdb": {},
+        "ghcr.io/with-caer/owc/workbench/macroquad": {}
+    }
+}

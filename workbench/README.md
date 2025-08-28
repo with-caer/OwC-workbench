@@ -38,7 +38,7 @@ These tools can be _manually_ installed onto any UNIX system via the [`install-t
 ```json
 "features": {
 
-    // DuckDB native library.
+    // DuckDB native libraries.
     "ghcr.io/with-caer/owc/workbench/duckdb": {
         "version": "1.3.2"
     },

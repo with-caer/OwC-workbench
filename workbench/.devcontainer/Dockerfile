@@ -2,17 +2,14 @@ FROM fedora:43
 
 # Install common OS-level development packages.
 RUN dnf install -y awk curl wget hostname \
-                   gcc g++ cmake \
-                   git \
+                   gcc g++ cmake git \
                    openssl openssl-devel
 
 # Install the base Rust toolchain.
 RUN dnf install -y rustup
 RUN rustup-init -y
 ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Install the Rust WASM cross-compilation target.
-RUN rustup target add wasm32-unknown-unknown
+RUN rustup toolchain install stable
 
 # Install `cargo-binstall` for installing pre-packaged cargo binaries.
 RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash

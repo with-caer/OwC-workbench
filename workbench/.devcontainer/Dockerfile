@@ -3,20 +3,21 @@ FROM fedora:43
 # Install common OS-level development packages.
 RUN dnf install -y awk curl wget hostname \
                    gcc g++ cmake git \
-                   openssl openssl-devel
+                   # Needed for many libraries that leverage OpenSSL.
+                   openssl openssl-devel perl \
+                   rustup
 
 # Install the base Rust toolchain.
-RUN dnf install -y rustup
 RUN rustup-init -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup toolchain install stable
 
 # Install `cargo-binstall` for installing pre-packaged cargo binaries.
-RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+RUN cargo install cargo-binstall
 
 # Install common Cargo binaries.
+ENV BINSTALL_DISABLE_TELEMETRY=true
 RUN cargo binstall --no-confirm cargo-audit \
-                                cargo-server \
                                 cargo-release \
                                 git-cliff
 

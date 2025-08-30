@@ -204,10 +204,10 @@ if CONFIG_DEFAULT_PACKAGES:
     dnf.packages(
         name="install recommended default OS packages",
         packages=[
-            "awk", "curl", "wget", "hostname", "git",
-            "gcc", "g++", "cmake",
+            "awk", "curl", "wget", "hostname",
+            "gcc", "g++", "cmake", "git",
+            "openssl", "openssl-devel", "perl",
             "rustup",
-            "openssl", "openssl-devel",
         ],
         update=True,
     )
@@ -225,10 +225,9 @@ if CONFIG_DEFAULT_PACKAGES:
         name="install recommended default Rust packages",
         commands=[
             "rustup-init -y",
-            "rustup component add rustfmt",
-            "rustup component add clippy",
-            "curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | sh",
-            "cargo binstall --no-confirm cargo-audit cargo-server",
+            "rustup toolchain install stable",
+            "cargo install cargo-binstall",
+            "cargo binstall --no-confirm cargo-audit cargo-release git-cliff",
         ],
         _sudo=True,
         _sudo_user=USER_NAME,

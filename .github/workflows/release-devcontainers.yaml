@@ -24,12 +24,20 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Convert repository to lowercase; without
+      # this step, ghcr.io will reject the image
+      # name(s) used in the next step.
+      - id: lower-repo
+        name: Convert Repository Name to Lowercase
+        run: |
+          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
+
       # Publish the Workbench dev container.
       - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/${{ github.repository }}/workbench
-          cacheFrom: ghcr.io/${{ github.repository }}/workbench
+          imageName: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
+          cacheFrom: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
           push: always
           subFolder: workbench
 
@@ -38,7 +46,7 @@ jobs:
         uses: devcontainers/action@v1
         with:
           publish-features: "true"
-          features-namespace: "${{ github.repository }}/workbench"
+          features-namespace: "${{ steps.lower-repo.outputs.repository }}/workbench"
           base-path-to-features: "./workbench/features/"
           generate-docs: "false"
         env:

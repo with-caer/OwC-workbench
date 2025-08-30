@@ -21,15 +21,13 @@ ln -s /usr/local/etc/owc/features/libduckdb/libduckdb.so /usr/local/lib/libduckd
 ln -s /usr/local/etc/owc/features/libduckdb/duckdb.h /usr/local/include/duckdb.h
 ln -s /usr/local/etc/owc/features/libduckdb/duckdb.hpp /usr/local/include/duckdb.hpp
 
-# Add extracted libraries to the path.
+# Add extracted libraries to the profiles.
 cat >> ~/.profile << 'EOF'
 export DUCKDB_LIB_DIR=/usr/local/etc/owc/features/duckdb
 export DUCKDB_INCLUDE_DIR=/usr/local/etc/owc/features/duckdb
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/etc/owc/features/duckdb
 EOF
-
-# Add extracted libraries to the shared profile for sourcing inside container jobs.
-cat >> /usr/local/share/.profile << 'EOF'
+cat >> /etc/profile << 'EOF'
 export DUCKDB_LIB_DIR=/usr/local/etc/owc/features/duckdb
 export DUCKDB_INCLUDE_DIR=/usr/local/etc/owc/features/duckdb
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/etc/owc/features/duckdb

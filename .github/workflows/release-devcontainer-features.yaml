@@ -1,0 +1,36 @@
+name: "Release Dev Container Features"
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  release:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+
+      # Checkout codebase.
+      - uses: actions/checkout@v3
+
+      # Convert repository to lowercase; without
+      # this step, ghcr.io will reject the image
+      # name(s) used in the next step.
+      - id: lower-repo
+        name: Convert Repository Name to Lowercase
+        run: |
+          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
+
+      # Publish the Workbench dev container features.
+      - name: Build and Publish `workbench-*` Dev Container features.
+        uses: devcontainers/action@v1
+        with:
+          publish-features: "true"
+          features-namespace: "${{ steps.lower-repo.outputs.repository }}/workbench"
+          base-path-to-features: "./workbench/features/"
+          generate-docs: "false"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

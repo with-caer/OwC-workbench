@@ -1,16 +1,16 @@
 name: "Release Dev Container Images"
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  release:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
 
       # Checkout codebase.
@@ -40,14 +40,3 @@ jobs:
           cacheFrom: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
           push: always
           subFolder: workbench
-
-      # Publish the Workbench dev container features.
-      - name: Build and Publish `workbench-*` Dev Container features.
-        uses: devcontainers/action@v1
-        with:
-          publish-features: "true"
-          features-namespace: "${{ steps.lower-repo.outputs.repository }}/workbench"
-          base-path-to-features: "./workbench/features/"
-          generate-docs: "false"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

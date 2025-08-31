@@ -13,13 +13,13 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup toolchain install stable
 
 # Install `cargo-binstall` for installing pre-packaged cargo binaries.
-RUN cargo install cargo-binstall
+RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
 # Install common Cargo binaries.
 ENV BINSTALL_DISABLE_TELEMETRY=true
-RUN cargo binstall --no-confirm cargo-audit \
-                                cargo-release \
-                                git-cliff
+RUN cargo binstall --only-signed --no-confirm cargo-audit \
+                                              cargo-release \
+                                              git-cliff
 
 # Install workbench customizations.
 COPY assets/default-bashrc.sh /root/.bashrc

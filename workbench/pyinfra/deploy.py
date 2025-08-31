@@ -226,8 +226,8 @@ if CONFIG_DEFAULT_PACKAGES:
         commands=[
             "rustup-init -y",
             "rustup toolchain install stable",
-            "cargo install cargo-binstall",
-            "cargo binstall --no-confirm cargo-audit cargo-release git-cliff",
+            "curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash",
+            "cargo binstall --only-signed --no-confirm cargo-audit cargo-release git-cliff",
         ],
         _sudo=True,
         _sudo_user=USER_NAME,

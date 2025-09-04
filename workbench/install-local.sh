@@ -39,20 +39,21 @@ EOF
 fi
 
 # Install default settings.
-cp ${script_dir}/assets/default-vscode-setings.json /home/${workbench_user_name}/.local/share/code-server/User/settings.json
+mkdir -p /home/${workbench_user_name}/.local/share/code-server/User
+cp ${script_dir}/assets/default-vscode-settings.json /home/${workbench_user_name}/.local/share/code-server/User/settings.json
 cat ${script_dir}/assets/default-bashrc.sh >> /home/${workbench_user_name}/.bashrc
 
 # Install Pyinfra dependencies.
-dnf install pipx
+dnf install -y pipx
 pipx install pyinfra
 
 # Execute PyInfra provisioner.
 cd ${script_dir}/pyinfra
-pyinfra inventory_local.py deploy.py -y
+${HOME}/.local/bin/pyinfra inventory_local.py deploy.py -y
 cd ${script_dir}
 
 # Install tools.
-./${script_dir}/install-tools.sh
+sh ${script_dir}/install-tools.sh
 
 # Install Pulumi dependencies.
 curl -fsSL https://get.pulumi.com | sh

@@ -1,4 +1,4 @@
-## What's Here
+## Available Features
 
 - ` duckdb`: Adds static libraries for compiling code against DuckDB.
 

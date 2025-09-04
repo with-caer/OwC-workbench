@@ -14,7 +14,7 @@ The easiest way to get started is with a Dev Container:
 ```
 
 This container comes preinstalled with all of the [workbench tools](tools/),
-and can be extended with any of the [workbench features](features/).
+and can be extended with any of the [workbench features](devcontainer/README.md#available-features).
 
 ### ...on `localhost`
 

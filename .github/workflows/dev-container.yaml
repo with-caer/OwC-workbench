@@ -1,4 +1,4 @@
-name: "Build and Release Dev Container"
+name: "Dev Container"
 
 on:
   push:

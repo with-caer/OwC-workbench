@@ -1,26 +1,29 @@
-# **O**perations **w**ith **C**aer
+Tools for managing single-user development environments (_"workbenches"_)
+hosted on local workstations, cloud virtual machines, or [Dev Containers](https://containers.dev).
 
-Reusable tooling for development environments (_"Workbenches"_)
-and production server operations.
-
-> _Note_: OwC tooling is built primarily for Fedora and Rocky Linux hosts.
+> _Note_: OwC tools are intended for use with Fedora or Rocky Linux hosts.
 
 ## Getting Started
 
-There's three ways to get started with OwC tooling:
+The easiest way to get started is with a Dev Container:
 
-- Installing the [Workbench Tools](workbench/README.md#workbench-tools)
-directly onto any UNIX-compatible system.
+``` json
+{
+    "image": "ghcr.io/with-caer/owc/workbench:latest"
+}
+```
 
-- Using the prebuilt [workbench dev container](workbench/README.md#with-a-dev-container), 
-which includes all of the workbench tools along with some recommended default packages.
+This container comes preinstalled with all of the [workbench tools](tools/),
+and can be extended with any of the [workbench features](features/).
 
-- Configuring a fresh VM or server as a [cloud workbench](workbench/README.md#with-a-vmservercomputer).
+### ...on `localhost`
 
-Refer to the [workbench](workbench/) documentation for more info.
+Alternatively, [`instal-local.sh`](install-local.sh) can be run directly on any
+machine running  Fedora or  Rocky Linux to configure that machine as a workbench.
 
 ## License and Contributions 
 
-Copyright 2025 With Caer, LLC, all rights reserved.
+Media assets (logos, imagery, etc.) are Copyright With Caer, LLC, all rights reserved.
 
-Licensed under the MIT license. Refer to [the license file](https://github.com/with-caer/owc/blob/main/LICENSE.txt) for more info.
+Code and documentation are Copyright With Caer, LLC, and licensed under
+[the MIT license](https://github.com/with-caer/owc/blob/main/LICENSE.txt).

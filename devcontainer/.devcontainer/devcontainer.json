@@ -2,8 +2,8 @@
     "build": {
         "dockerfile": "./Dockerfile",
 
-        // Build devcontainer from the workbench/ directory
-        "context": ".."
+        // Build devcontainer from the root directory
+        "context": "../.."
     },
     
     "customizations": {

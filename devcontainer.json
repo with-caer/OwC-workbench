@@ -1,3 +1,6 @@
+// Note: This is the Devcontainer for working on _this_ repository.
+//       To modify the OwC Workbench devcontainers, head over to the
+//       devcontainer/ directory instead.
 {
     "image": "ghcr.io/with-caer/owc/workbench:latest",
     "features": {

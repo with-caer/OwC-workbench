@@ -1,4 +1,4 @@
-name: "Release Dev Container Images"
+name: "Build and Release Dev Container"
 
 on:
   push:
@@ -39,4 +39,4 @@ jobs:
           imageName: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
           cacheFrom: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
           push: always
-          subFolder: workbench
+          subFolder: devcontainer

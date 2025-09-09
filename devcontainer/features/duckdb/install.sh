@@ -17,9 +17,9 @@ dnf install -y unzip
 unzip libduckdb.zip -d /usr/local/etc/owc/features/duckdb
 
 # Link libraries onto the global library path.
-ln -s /usr/local/etc/owc/features/libduckdb/libduckdb.so /usr/local/lib/libduckdb.so
-ln -s /usr/local/etc/owc/features/libduckdb/duckdb.h /usr/local/include/duckdb.h
-ln -s /usr/local/etc/owc/features/libduckdb/duckdb.hpp /usr/local/include/duckdb.hpp
+ln -s /usr/local/etc/owc/features/duckdb/libduckdb.so /usr/local/lib/libduckdb.so
+ln -s /usr/local/etc/owc/features/duckdb/duckdb.h /usr/local/include/duckdb.h
+ln -s /usr/local/etc/owc/features/duckdb/duckdb.hpp /usr/local/include/duckdb.hpp
 
 # Add extracted libraries to the system profile.
 cat >> /etc/profile.d/owc-workbench-duckdb.sh << 'EOF'

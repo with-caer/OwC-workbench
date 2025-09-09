@@ -2,6 +2,9 @@ name: "Dev Container"
 
 on:
   push:
+    paths:
+      - ".github/workflows/dev-container-features.yaml"
+      - "devcontainer/.devcontainer/**"
   workflow_dispatch:
 
 jobs:

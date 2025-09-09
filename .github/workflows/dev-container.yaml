@@ -3,7 +3,7 @@ name: "Dev Container"
 on:
   push:
     paths:
-      - ".github/workflows/dev-container-features.yaml"
+      - ".github/workflows/dev-container.yaml"
       - "devcontainer/.devcontainer/**"
   workflow_dispatch:
 
@@ -27,19 +27,19 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Convert repository to lowercase; without
+      # Convert repository owner to lowercase; without
       # this step, ghcr.io will reject the image
       # name(s) used in the next step.
-      - id: lower-repo
-        name: Convert Repository Name to Lowercase
+      - id: lower-repo-owner
+        name: Convert Repo Owner Name to Lowercase
         run: |
-          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
+          echo "repo_owner=${GITHUB_REPOSITORY_OWNER@L}" >> $GITHUB_OUTPUT
 
       # Publish the Workbench dev container.
       - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
-          cacheFrom: ghcr.io/${{ steps.lower-repo.outputs.repository }}/workbench
+          imageName: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc/workbench
+          cacheFrom: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc/workbench
           push: always
           subFolder: devcontainer

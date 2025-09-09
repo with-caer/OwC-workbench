@@ -11,6 +11,7 @@ RUN dnf install -y awk curl wget hostname \
 RUN rustup-init -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup toolchain install stable
+RUN rustup update stable
 
 # Install `cargo-binstall` for installing pre-packaged cargo binaries.
 RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash

@@ -41,7 +41,12 @@ jobs:
       - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
-          imageTag: latest,1.0.0
+          # @caer: todo: only publish `latest` tag if any of
+          #        the other tags have already been published,
+          #        since we don't want to overwrite existing
+          #        images that are tagged with versions.
+          # imageTag: latest,1.0.0
+          imageTag: latest
           imageName: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc-workbench
           cacheFrom: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc-workbench
           push: always

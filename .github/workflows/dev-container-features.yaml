@@ -2,6 +2,8 @@ name: "Dev Container Features"
 
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/dev-container-features.yaml"
       - "devcontainer/features/**"
@@ -28,11 +30,11 @@ jobs:
           echo "repo_owner=${GITHUB_REPOSITORY_OWNER@L}" >> $GITHUB_OUTPUT
 
       # Publish the Workbench dev container features.
-      - name: Build and Publish `workbench-*` Dev Container features.
+      - name: Build and Publish Dev Container features.
         uses: devcontainers/action@v1
         with:
           publish-features: "true"
-          features-namespace: "${{ steps.lower-repo-owner.outputs.repo_owner }}/owc/workbench"
+          features-namespace: "${{ steps.lower-repo-owner.outputs.repo_owner }}/owc-workbench"
           base-path-to-features: "./devcontainer/features/"
           generate-docs: "false"
         env:

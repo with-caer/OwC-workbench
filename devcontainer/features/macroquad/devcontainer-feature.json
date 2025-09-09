@@ -1,7 +1,7 @@
 {
     "name": "OwC Workbench - Macroquad Support",
     "id": "macroquad",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "description": "Adds support for Macroquad development to an OwC Workbench.",
     "options": {}
 }

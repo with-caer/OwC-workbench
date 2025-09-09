@@ -9,7 +9,7 @@ The easiest way to get started is with a Dev Container:
 
 ``` json
 {
-    "image": "ghcr.io/with-caer/owc/workbench:latest"
+    "image": "ghcr.io/with-caer/owc-workbench:latest"
 }
 ```
 

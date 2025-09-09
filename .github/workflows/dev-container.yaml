@@ -2,6 +2,8 @@ name: "Dev Container"
 
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/dev-container.yaml"
       - "devcontainer/.devcontainer/**"
@@ -39,8 +41,8 @@ jobs:
       - name: Build and Publish `workbench` Dev Container
         uses: devcontainers/ci@v0.3
         with:
-          imageTag: latest,1.0.1,1.0,1
-          imageName: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc/workbench
-          cacheFrom: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc/workbench
+          imageTag: latest,1.0.0
+          imageName: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc-workbench
+          cacheFrom: ghcr.io/${{ steps.lower-repo-owner.outputs.repo_owner }}/owc-workbench
           push: always
           subFolder: devcontainer

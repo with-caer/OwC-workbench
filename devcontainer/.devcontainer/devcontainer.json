@@ -10,8 +10,7 @@
         "vscode": {
             "extensions": [
                 "rust-lang.rust-analyzer",
-                "tamasfe.even-better-toml",
-                "beardedbear.beardedtheme"
+                "tamasfe.even-better-toml"
             ],
             "settings": {
                 "files.watcherExclude": {
@@ -21,9 +20,9 @@
                 "window.autoDetectColorScheme": true,
                 "window.autoDetectHighContrast": false,
             
-                "workbench.preferredDarkColorTheme": "Bearded Theme Monokai Terra",
-                "workbench.preferredLightColorTheme": "Bearded Theme feat. Melle Julie Light",
-                "workbench.colorTheme": "Bearded Theme feat. Melle Julie Light",
+                "workbench.preferredDarkColorTheme": "Monokai",
+                "workbench.preferredLightColorTheme": "Quiet Light",
+                "workbench.colorTheme": "Quiet Light",
                 "workbench.startupEditor": "none",
                 "workbench.editor.enablePreview": false,
                 "workbench.activityBar.location": "top",
@@ -39,7 +38,18 @@
                 "terminal.integrated.cursorStyle": "underline",
                 "terminal.integrated.localEchoEnabled": "on",
                 "terminal.integrated.localEchoStyle": "bold",
-                "terminal.integrated.localEchoLatencyThreshold": 10
+                "terminal.integrated.localEchoLatencyThreshold": 10,
+
+                // Disabling cache priming can speed up the first-time
+                // start tie of Rust Analyzer, sometimes, at the expense
+                // of more RAM used.
+                "rust-analyzer.cachePriming.enable": false,
+
+                // Enabling will cause Rust Analyzer to store compiled
+                // artifacts in their own directory. While this behavior
+                // effectively doubles storage use, it means that Rust
+                // Analyzer won't conflict with manual invocations of `cargo`.
+                "rust-analyzer.cargo.targetDir": true
             }
         }
     }

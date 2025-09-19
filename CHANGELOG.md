@@ -8,6 +8,7 @@ This file contains a chronological list of all major changes made to this crate.
 - Store duckdb env in /etc/profile.d/
 - Reorganize repo around workbench only
 - Rename to owc-workbench
+- Remove added vscode themes, configure rust-analyzer for faster start-up in dev containers
 
 ### 🐛 Fixes
 

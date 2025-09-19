@@ -43,16 +43,13 @@ fi
 # Normalize commit dates.
 utc_day_begin=$(TZ=0 date +%F)T00:00:00+0000 
 
-# Update changelogs for all crates.
+# Update root-level changelog.
+git cliff --with-commit "${commit_message}" --config ${config_path}/git-cliff.toml -o CHANGELOG.md
+
+# Update changelogs for all sub-crates in a Rust project.
 ls */Cargo.toml | while read; do
     crate_path=${REPLY%/*}
-
-    # Only udpate changelogs for crate paths affected by this commit.
-    if [ ! -z "$(git status --porcelain ${crate_path})" ]; then
-        cd ${crate_path}
-        git cliff --with-commit "${commit_message}" --config ${config_path}/git-cliff.toml -o CHANGELOG.md
-        cd ..
-    fi
+    git cliff --include-path ${crate_path}/* --with-commit "${commit_message}" --config ${config_path}/git-cliff.toml -o ${crate_path}/CHANGELOG.md
 done | sort -u
 
 # Stage all changes and show the staged changes to the user.

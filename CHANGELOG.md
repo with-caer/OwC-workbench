@@ -29,6 +29,7 @@ This file contains a chronological list of all major changes made to this crate.
 ### 📚 Documentation
 
 - Add note on image tagging
+- Draft contributing, cla guidelines
 
 ## [feature_duckdb_1.0.5] - 2025-08-30
 

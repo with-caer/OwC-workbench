@@ -2,9 +2,9 @@
 //       To modify the OwC Workbench devcontainers, head over to the
 //       devcontainer/ directory instead.
 {
-    "image": "ghcr.io/with-caer/owc/workbench:latest",
+    "image": "ghcr.io/withcaer/owc/workbench:latest",
     "features": {
-        "ghcr.io/with-caer/owc/workbench/duckdb": {},
-        "ghcr.io/with-caer/owc/workbench/macroquad": {}
+        "ghcr.io/withcaer/owc/workbench/duckdb": {},
+        "ghcr.io/withcaer/owc/workbench/macroquad": {}
     }
 }

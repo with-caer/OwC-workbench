@@ -9,7 +9,7 @@ The easiest way to get started is with a Dev Container:
 
 ``` json
 {
-    "image": "ghcr.io/with-caer/owc-workbench:latest"
+    "image": "ghcr.io/withcaer/owc-workbench:latest"
 }
 ```
 
@@ -26,4 +26,4 @@ machine running  Fedora or  Rocky Linux to configure that machine as a workbench
 Media assets (logos, imagery, etc.) are Copyright With Caer, LLC, all rights reserved.
 
 Code and documentation are Copyright With Caer, LLC, and licensed under
-[the MIT license](https://github.com/with-caer/owc/blob/main/LICENSE.txt).
+[the MIT license](https://github.com/withcaer/owc/blob/main/LICENSE.txt).

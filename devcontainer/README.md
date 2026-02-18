@@ -3,7 +3,7 @@
 - ` duckdb`: Adds static libraries for compiling code against DuckDB.
 
    ```json
-    "ghcr.io/with-caer/owc-workbench/duckdb": {
+    "ghcr.io/withcaer/owc-workbench/duckdb": {
         "version": "1.3.2"
     },
    ```
@@ -11,5 +11,5 @@
 - `macroquad`: Adds system packages for running apps built with Macroquad.
 
    ```json
-   "ghcr.io/with-caer/owc-workbench/macroquad": {},
+   "ghcr.io/withcaer/owc-workbench/macroquad": {},
    ```
